@@ -88,6 +88,44 @@
   }
   @keyframes spinVinyl{ 100%{ transform:rotate(360deg); } }
 
+  /* INTERACTIVE PEEKING TEDDY BUDDY */
+  .peeking-teddy-buddy{
+    position:fixed; bottom:-10px; left:20px; z-index:90; cursor:pointer;
+    transition:transform .3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter:drop-shadow(0 8px 18px rgba(0,0,0,0.18));
+  }
+  .peeking-teddy-buddy:hover{ transform:translateY(-18px) rotate(4deg); }
+  .teddy-svg{ width:90px; height:90px; overflow:visible; }
+  .teddy-bubble{
+    position:absolute; bottom:92px; left:10px; background:#fff; color:#2e1a2c;
+    font-family:'Caveat',cursive; font-size:1.15rem; padding:8px 14px; border-radius:14px;
+    box-shadow:0 6px 20px rgba(74,37,69,0.18); white-space:nowrap; pointer-events:none;
+    opacity:0; transform:scale(0.8); transform-origin:bottom left; transition:opacity .25s ease, transform .25s ease;
+    border:2px solid var(--rose);
+  }
+  .teddy-bubble::after{
+    content:''; position:absolute; bottom:-7px; left:20px; width:12px; height:12px;
+    background:#fff; border-right:2px solid var(--rose); border-bottom:2px solid var(--rose); transform:rotate(45deg);
+  }
+  .teddy-bubble.show{ opacity:1; transform:scale(1); }
+
+  /* HERO TEDDY */
+  .hero-teddy{
+    width:110px; height:110px; margin:0 auto 16px; filter:drop-shadow(0 8px 16px rgba(232, 160, 180, 0.35));
+    animation:floatTeddy 2.8s ease-in-out infinite alternate;
+  }
+  @keyframes floatTeddy{
+    0%{ transform:translateY(0) rotate(-3deg); }
+    100%{ transform:translateY(-10px) rotate(3deg); }
+  }
+
+  /* STICKER EMBELLISHMENTS */
+  .polaroid-sticker{
+    position:absolute; top:-14px; right:-14px; width:44px; height:44px; z-index:10;
+    filter:drop-shadow(0 4px 6px rgba(0,0,0,0.18)); transition:transform .2s ease;
+  }
+  .polaroid-card:hover .polaroid-sticker{ transform:scale(1.2) rotate(12deg); }
+
   /* GATE MODAL */
   body.gate-active{ overflow:hidden; height:100vh; }
   .gate{ position:fixed; inset:0; z-index:1000; background:linear-gradient(135deg, var(--plum), var(--plum-deep)); display:flex; align-items:center; justify-content:center; padding:24px; transition:opacity .6s ease, visibility .6s ease; }
@@ -134,7 +172,7 @@
 
   #hero{ background:radial-gradient(circle at 50% 20%, var(--blush) 0%, var(--cream) 65%); }
   body.midnight-mode #hero{ background:radial-gradient(circle at 50% 20%, #30132b 0%, #120715 70%); }
-  .hero-mark{ font-size:2.6rem; margin-bottom:22px; color:var(--rose); animation:pulse 1.8s ease-in-out infinite; }
+  .hero-mark{ font-size:2.6rem; margin-bottom:12px; color:var(--rose); animation:pulse 1.8s ease-in-out infinite; }
   @keyframes pulse{ 0%,100%{transform:scale(1);} 50%{transform:scale(1.15);} }
   .scroll-hint{ margin-top:56px; font-size:.95rem; color:var(--plum); display:flex; flex-direction:column; align-items:center; gap:6px; opacity:.75; }
   .scroll-hint .chevron{ width:10px; height:10px; border-right:2px solid var(--plum); border-bottom:2px solid var(--plum); transform:rotate(45deg); animation:bob 1.6s ease-in-out infinite; }
@@ -206,7 +244,7 @@
     font-size:0.98rem; line-height:1.6; margin:0; color:var(--plum-deep);
   }
 
-  /* HEARTBEAT & CALIBRATED DAYS COUNTER WITH MILLISECONDS & ECG WAVE */
+  /* HEARTBEAT & CALIBRATED DAYS COUNTER */
   #counter{ background:rgba(246,217,224,.82); }
   body.midnight-mode #counter{ background:rgba(20, 9, 23, 0.88); }
   .pulse-ring-container{
@@ -261,7 +299,6 @@
     font-family:'Space Mono',monospace; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--plum); font-weight:700;
   }
 
-  /* ECG HEARTBEAT WAVE */
   .ecg-container{
     width:100%; max-width:480px; height:45px; margin:20px auto 0; position:relative; overflow:hidden;
   }
@@ -340,8 +377,8 @@
   }
   .envelope-flap{
     position:absolute; top:0; left:0; right:0; height:90px; background:var(--rose);
-    clip-path:polygon(0 0, 100 0, 50% 100%); clip-path:polygon(0 0, 100% 0, 50% 100%);
-    transform-origin:top; transition:transform .6s cubic-bezier(0.4, 0, 0.2, 1); z-index:4;
+    clip-path:polygon(0 0, 100% 0, 50% 100%); transform-origin:top;
+    transition:transform .6s cubic-bezier(0.4, 0, 0.2, 1); z-index:4;
   }
   .envelope-wrapper.open .envelope-flap{ transform:rotateX(180deg); z-index:1; }
   .envelope-seal{
@@ -363,7 +400,7 @@
   .letter-paper p:hover{ color:var(--plum); }
   .letter-paper .sign{ font-family:'Caveat',cursive; font-size:1.8rem; color:var(--rose); text-align:right; margin-top:10px; }
 
-  /* POLAROID SCRAPBOOK WITH PHOTO UPLOAD */
+  /* POLAROID SCRAPBOOK */
   #scrapbook{ background:rgba(246,217,224,.82); position:relative; overflow:hidden; }
   body.midnight-mode #scrapbook{ background:rgba(24, 11, 26, 0.88); }
   .scrapbook-board{
@@ -455,7 +492,7 @@
   body.midnight-mode .back{ background:#3a1435; color:#fedbe7; border:1px solid rgba(255,143,178,0.25); }
   .tap-hint{ margin-top:28px; font-size:.85rem; color:var(--plum); opacity:.6; }
 
-  /* TERMS GAG WITH DIGITAL SIGNATURE & OFFICIAL CERTIFICATE */
+  /* TERMS GAG WITH DIGITAL SIGNATURE PAD & ROYAL CERTIFICATE */
   #terms{ background:rgba(74,37,69,.92); color:var(--blush); }
   body.midnight-mode #terms{ background:rgba(26, 12, 28, 0.95); }
   #terms h2{ color:var(--blush); }
@@ -480,7 +517,6 @@
   .agree-btn.ready:hover{ transform:scale(1.05); }
   .scroll-nudge{ margin-top:10px; font-size:.8rem; color:var(--rose); opacity:.85; }
 
-  /* ROYAL CERTIFICATE MODAL */
   .certificate-card{
     margin-top:24px; max-width:520px; width:100%; background:#fff; border:8px double var(--gold);
     border-radius:16px; padding:28px 24px; color:var(--plum-deep); display:none; animation:stampThud .4s ease;
@@ -521,7 +557,7 @@
   .meter-done{ margin-top:24px; font-family:'Fraunces',serif; font-size:1.4rem; color:var(--plum); opacity:0; transform:translateY(8px); transition:opacity .5s ease, transform .5s ease; }
   .meter-done.show{ opacity:1; transform:translateY(0); }
 
-  /* ASK OUT */
+  /* ASK OUT & CUDDLE TEDDY REVEAL */
   #ask{ background:rgba(250,243,236,.85); overflow:hidden; }
   body.midnight-mode #ask{ background:rgba(18, 10, 22, 0.9); }
   #petals{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:-1; }
@@ -531,7 +567,7 @@
     margin-bottom:22px; letter-spacing:.02em; display:inline-block;
   }
   body.midnight-mode .status-badge{ background:rgba(255,143,178,0.2); border:1px solid var(--rose); color:var(--gold); }
-  .ask-box{ position:relative; width:100%; max-width:560px; height:340px; margin-top:20px; }
+  .ask-box{ position:relative; width:100%; max-width:560px; height:360px; margin-top:20px; }
   .btn-row{ position:absolute; top:40px; left:0; right:0; display:flex; gap:18px; justify-content:center; }
   .yes-btn, .no-btn{ padding:16px 32px; border-radius:999px; font-size:1.05rem; font-weight:700; font-family:'Nunito',sans-serif; border:none; cursor:pointer; }
   .yes-btn{ background:var(--plum); color:var(--cream); transition:transform .15s ease, box-shadow .2s ease; box-shadow:0 6px 20px rgba(74,37,69,0.2); }
@@ -539,7 +575,13 @@
   .yes-btn:hover{ transform:scale(1.08); }
   .no-btn{ background:transparent; color:var(--plum); border:2px solid var(--plum); position:absolute; top:40px; transition:left .14s ease, top .14s ease, transform .14s ease, background .2s ease; }
   body.midnight-mode .no-btn{ color:var(--rose); border-color:var(--rose); }
-  .yes-reveal{ margin-top:150px; font-family:'Fraunces',serif; font-size:1.5rem; color:var(--plum); opacity:0; transform:translateY(10px); transition:opacity .5s ease, transform .5s ease; }
+  
+  .cuddle-teddy-duo{
+    display:none; margin:110px auto 14px; width:120px; height:90px;
+    filter:drop-shadow(0 6px 14px rgba(232, 160, 180, 0.35)); animation:heartPop .4s ease;
+  }
+  .cuddle-teddy-duo.show{ display:block; }
+  .yes-reveal{ font-family:'Fraunces',serif; font-size:1.45rem; color:var(--plum); opacity:0; transform:translateY(10px); transition:opacity .5s ease, transform .5s ease; }
   .yes-reveal.show{ opacity:1; transform:translateY(0); }
   .heart{ position:fixed; top:-40px; font-size:1.4rem; color:var(--rose); pointer-events:none; animation:fall linear forwards; z-index:60; }
   @keyframes fall{ to{ transform:translateY(110vh) rotate(360deg); opacity:0; } }
@@ -553,6 +595,35 @@
 
 <!-- NIGHT SKY / FIREFLIES CANVAS -->
 <canvas id="nightSky"></canvas>
+
+<!-- INTERACTIVE PEEKING TEDDY BUDDY -->
+<div class="peeking-teddy-buddy" id="peekingBuddy" title="Tap me!">
+  <div class="teddy-bubble" id="buddyBubble">Don't be mad at him for too long! 💖</div>
+  <svg class="teddy-svg" viewBox="0 0 100 100">
+    <!-- Ears -->
+    <circle cx="28" cy="30" r="14" fill="#D4A373" stroke="#fff" stroke-width="2.5"/>
+    <circle cx="28" cy="30" r="8" fill="#F4ACB7"/>
+    <circle cx="72" cy="30" r="14" fill="#D4A373" stroke="#fff" stroke-width="2.5"/>
+    <circle cx="72" cy="30" r="8" fill="#F4ACB7"/>
+    <!-- Head -->
+    <ellipse cx="50" cy="50" rx="32" ry="28" fill="#E6BA95" stroke="#fff" stroke-width="2.5"/>
+    <!-- Eyes -->
+    <circle cx="38" cy="46" r="4.5" fill="#2E1A2C"/>
+    <circle cx="39.5" cy="44.5" r="1.5" fill="#FFF"/>
+    <circle cx="62" cy="46" r="4.5" fill="#2E1A2C"/>
+    <circle cx="63.5" cy="44.5" r="1.5" fill="#FFF"/>
+    <!-- Blush -->
+    <circle cx="30" cy="54" r="5.5" fill="#FFAAA6" opacity="0.75"/>
+    <circle cx="70" cy="54" r="5.5" fill="#FFAAA6" opacity="0.75"/>
+    <!-- Snout & Nose -->
+    <ellipse cx="50" cy="55" rx="12" ry="9" fill="#FFFDFB"/>
+    <ellipse cx="50" cy="52" rx="4" ry="2.8" fill="#4A2545"/>
+    <path d="M47 57 Q50 60 53 57" stroke="#4A2545" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+    <!-- Paws holding edge -->
+    <ellipse cx="28" cy="74" rx="8" ry="6" fill="#D4A373" stroke="#fff" stroke-width="2"/>
+    <ellipse cx="72" cy="74" rx="8" ry="6" fill="#D4A373" stroke="#fff" stroke-width="2"/>
+  </svg>
+</div>
 
 <!-- GATE MODAL -->
 <div class="gate" id="gate">
@@ -608,9 +679,49 @@
   </button>
 </div>
 
-<!-- HERO SECTION -->
+<!-- HERO SECTION WITH APOLOGETIC ROSE TEDDY STICKER -->
 <section id="hero">
-  <div class="hero-mark">&#10084;</div>
+  <!-- APOLOGETIC TEDDY WITH ROSE SVG -->
+  <div class="hero-teddy">
+    <svg viewBox="0 0 120 120" style="width:100%; height:100%;">
+      <!-- Left Ear -->
+      <circle cx="34" cy="32" r="15" fill="#D4A373" stroke="#FFF" stroke-width="3"/>
+      <circle cx="34" cy="32" r="9" fill="#F4ACB7"/>
+      <!-- Right Ear -->
+      <circle cx="86" cy="32" r="15" fill="#D4A373" stroke="#FFF" stroke-width="3"/>
+      <circle cx="86" cy="32" r="9" fill="#F4ACB7"/>
+      <!-- Body -->
+      <ellipse cx="60" cy="85" rx="28" ry="24" fill="#D4A373" stroke="#FFF" stroke-width="3"/>
+      <ellipse cx="60" cy="85" rx="18" ry="15" fill="#FFFDFB" opacity="0.9"/>
+      <!-- Head -->
+      <circle cx="60" cy="50" r="34" fill="#E6BA95" stroke="#FFF" stroke-width="3"/>
+      <!-- Eyes (Puppy Dog Apologetic Eyes) -->
+      <circle cx="47" cy="46" r="5" fill="#2E1A2C"/>
+      <circle cx="48.5" cy="44.5" r="1.8" fill="#FFF"/>
+      <circle cx="45.5" cy="47.5" r="0.9" fill="#FFF"/>
+      <circle cx="73" cy="46" r="5" fill="#2E1A2C"/>
+      <circle cx="74.5" cy="44.5" r="1.8" fill="#FFF"/>
+      <circle cx="71.5" cy="47.5" r="0.9" fill="#FFF"/>
+      <!-- Eyebrows (Sad / Apologetic tilt) -->
+      <path d="M42 38 Q47 36 51 39" stroke="#684A33" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M78 38 Q73 36 69 39" stroke="#684A33" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- Snout -->
+      <ellipse cx="60" cy="56" rx="13" ry="10" fill="#FFFDFB"/>
+      <ellipse cx="60" cy="53" rx="4.5" ry="3" fill="#4A2545"/>
+      <path d="M57 58 Q60 61 63 58" stroke="#4A2545" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- Blush -->
+      <circle cx="36" cy="55" r="6.5" fill="#FFAAA6" opacity="0.8"/>
+      <circle cx="84" cy="55" r="6.5" fill="#FFAAA6" opacity="0.8"/>
+      <!-- Holding Red Rose -->
+      <path d="M60 88 Q70 78 78 72" stroke="#4F772D" stroke-width="3" fill="none" stroke-linecap="round"/>
+      <circle cx="80" cy="70" r="7" fill="#E63946"/>
+      <circle cx="83" cy="67" r="4.5" fill="#FF758F"/>
+      <!-- Paws -->
+      <ellipse cx="44" cy="80" rx="7" ry="6" fill="#D4A373" stroke="#FFF" stroke-width="2"/>
+      <ellipse cx="74" cy="78" rx="7" ry="6" fill="#D4A373" stroke="#FFF" stroke-width="2"/>
+    </svg>
+  </div>
+
   <h1 id="typewriter"></h1>
   <p>Not the fast, texting-while-walking kind of sorry.<br>The proper kind, with graphs, dates, and memories. Scroll down.</p>
   <div class="scroll-hint"><span>keep going</span><span class="chevron"></span></div>
@@ -661,7 +772,7 @@
   </div>
 </section>
 
-<!-- LIVE HEARTBEAT & CALIBRATED LOVE COUNTER WITH MILLISECONDS & ECG -->
+<!-- LIVE HEARTBEAT & CALIBRATED LOVE COUNTER -->
 <section id="counter">
   <div class="pulse-ring-container">
     <div class="pulse-ring"></div>
@@ -704,7 +815,6 @@
     </div>
   </div>
 
-  <!-- ANIMATED ECG PULSE LINE -->
   <div class="ecg-container">
     <svg class="ecg-svg" viewBox="0 0 500 45">
       <path class="ecg-pulse" d="M0,25 L160,25 L175,8 L190,40 L205,15 L220,32 L235,25 L500,25" />
@@ -777,7 +887,7 @@
   </div>
 </section>
 
-<!-- DRAGGABLE POLAROID SCRAPBOOK WITH REAL PHOTO UPLOAD & LOCALSTORAGE -->
+<!-- DRAGGABLE POLAROID SCRAPBOOK WITH TEDDY STICKERS & PHOTO UPLOAD -->
 <section id="scrapbook">
   <h2>Moments We're Made Of</h2>
   <p>Drag them around, pile them up, and tap any polaroid to flip. Tap 📷 to insert our real photo!</p>
@@ -786,6 +896,22 @@
     <!-- Polaroid 1 -->
     <div class="polaroid-card tilt-card" data-idx="0" style="transform: rotate(-3deg);">
       <div class="polaroid-tape"></div>
+      
+      <!-- Cute Teddy Heart Sticker -->
+      <div class="polaroid-sticker">
+        <svg viewBox="0 0 50 50">
+          <circle cx="16" cy="16" r="7" fill="#D4A373" stroke="#FFF" stroke-width="2"/>
+          <circle cx="34" cy="16" r="7" fill="#D4A373" stroke="#FFF" stroke-width="2"/>
+          <circle cx="25" cy="25" r="15" fill="#E6BA95" stroke="#FFF" stroke-width="2"/>
+          <circle cx="21" cy="23" r="2.2" fill="#2E1A2C"/>
+          <circle cx="29" cy="23" r="2.2" fill="#2E1A2C"/>
+          <ellipse cx="25" cy="27" rx="5" ry="3.5" fill="#FFFDFB"/>
+          <ellipse cx="25" cy="26" rx="1.8" ry="1.2" fill="#4A2545"/>
+          <circle cx="17" cy="27" r="2.8" fill="#FFAAA6" opacity="0.8"/>
+          <circle cx="33" cy="27" r="2.8" fill="#FFAAA6" opacity="0.8"/>
+        </svg>
+      </div>
+
       <div class="polaroid-photo" id="photo0" style="background:linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
         <span>21 Jan 2023</span>
@@ -801,6 +927,21 @@
     <!-- Polaroid 2 -->
     <div class="polaroid-card tilt-card" data-idx="1" style="transform: rotate(4deg);">
       <div class="polaroid-tape" style="transform: translateX(-50%) rotate(2deg);"></div>
+      
+      <!-- Teddy Crown Sticker -->
+      <div class="polaroid-sticker">
+        <svg viewBox="0 0 50 50">
+          <path d="M18 10 L25 15 L32 10 L30 18 L20 18 Z" fill="#D9A441" stroke="#FFF" stroke-width="1.5"/>
+          <circle cx="16" cy="20" r="6" fill="#D4A373" stroke="#FFF" stroke-width="2"/>
+          <circle cx="34" cy="20" r="6" fill="#D4A373" stroke="#FFF" stroke-width="2"/>
+          <circle cx="25" cy="28" r="14" fill="#E6BA95" stroke="#FFF" stroke-width="2"/>
+          <circle cx="21" cy="26" r="2.2" fill="#2E1A2C"/>
+          <circle cx="29" cy="26" r="2.2" fill="#2E1A2C"/>
+          <ellipse cx="25" cy="30" rx="5" ry="3.5" fill="#FFFDFB"/>
+          <ellipse cx="25" cy="29" rx="1.8" ry="1.2" fill="#4A2545"/>
+        </svg>
+      </div>
+
       <div class="polaroid-photo" id="photo1" style="background:linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.4z"/></svg>
         <span>14 Feb 2023</span>
@@ -816,6 +957,22 @@
     <!-- Polaroid 3 -->
     <div class="polaroid-card tilt-card" data-idx="2" style="transform: rotate(-2deg);">
       <div class="polaroid-tape"></div>
+      
+      <!-- Teddy Wink Sticker -->
+      <div class="polaroid-sticker">
+        <svg viewBox="0 0 50 50">
+          <circle cx="16" cy="16" r="7" fill="#D4A373" stroke="#FFF" stroke-width="2"/>
+          <circle cx="34" cy="16" r="7" fill="#D4A373" stroke="#FFF" stroke-width="2"/>
+          <circle cx="25" cy="25" r="15" fill="#E6BA95" stroke="#FFF" stroke-width="2"/>
+          <path d="M19 23 Q22 25 24 23" stroke="#2E1A2C" stroke-width="2" fill="none" stroke-linecap="round"/>
+          <circle cx="29" cy="23" r="2.2" fill="#2E1A2C"/>
+          <ellipse cx="25" cy="27" rx="5" ry="3.5" fill="#FFFDFB"/>
+          <ellipse cx="25" cy="26" rx="1.8" ry="1.2" fill="#4A2545"/>
+          <circle cx="17" cy="27" r="2.8" fill="#FFAAA6" opacity="0.8"/>
+          <circle cx="33" cy="27" r="2.8" fill="#FFAAA6" opacity="0.8"/>
+        </svg>
+      </div>
+
       <div class="polaroid-photo" id="photo2" style="background:linear-gradient(135deg, #f6d365 0%, #fda085 100%);">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
         <span>21 Feb 2023</span>
@@ -831,6 +988,21 @@
     <!-- Polaroid 4 -->
     <div class="polaroid-card tilt-card" data-idx="3" style="transform: rotate(3deg);">
       <div class="polaroid-tape" style="transform: translateX(-50%) rotate(-1deg);"></div>
+      
+      <!-- Teddy Heart Hug Sticker -->
+      <div class="polaroid-sticker">
+        <svg viewBox="0 0 50 50">
+          <circle cx="16" cy="16" r="7" fill="#D4A373" stroke="#FFF" stroke-width="2"/>
+          <circle cx="34" cy="16" r="7" fill="#D4A373" stroke="#FFF" stroke-width="2"/>
+          <circle cx="25" cy="25" r="15" fill="#E6BA95" stroke="#FFF" stroke-width="2"/>
+          <circle cx="21" cy="23" r="2.2" fill="#2E1A2C"/>
+          <circle cx="29" cy="23" r="2.2" fill="#2E1A2C"/>
+          <ellipse cx="25" cy="27" rx="5" ry="3.5" fill="#FFFDFB"/>
+          <ellipse cx="25" cy="26" rx="1.8" ry="1.2" fill="#4A2545"/>
+          <path d="M25 36 L21 32 Q18 29 21 26 Q24 23 25 27 Q26 23 29 26 Q32 29 29 32 Z" fill="#E63946"/>
+        </svg>
+      </div>
+
       <div class="polaroid-photo" id="photo3" style="background:linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         <span>Permanent Chaos</span>
@@ -953,7 +1125,6 @@
     <label for="agreeCheck">I have read the terms (mostly) and choose to forgive the Apologizer</label>
   </div>
 
-  <!-- DIGITAL SIGNATURE PAD -->
   <div class="signature-box" id="sigBox" style="display:none;">
     <h4>Draw Your Royal Signature or a Heart:</h4>
     <canvas id="signaturePad" width="380" height="100"></canvas>
@@ -964,7 +1135,6 @@
 
   <button class="agree-btn" id="agreeBtn">Sign & Accept terms</button>
 
-  <!-- OFFICIAL ROYAL CERTIFICATE -->
   <div class="certificate-card" id="certificateCard">
     <div class="cert-seal-icon">&#128081;</div>
     <div class="cert-title">Royal Certificate of Forgiveness</div>
@@ -1002,7 +1172,7 @@
   <div class="meter-done" id="meterDone">There it is. Thank you &mdash; that means everything.</div>
 </section>
 
-<!-- ASK OUT -->
+<!-- ASK OUT & CUDDLING TEDDIES REVEAL -->
 <section id="ask">
   <canvas id="petals"></canvas>
   <div class="status-badge">status: taken &mdash; compiled without errors, zero bugs found in you</div>
@@ -1014,6 +1184,34 @@
       <button class="no-btn" id="noBtn">No</button>
       <div class="comic-bubble" id="noBubble"></div>
     </div>
+    
+    <!-- CUDDLING TEDDIES STICKER REVEAL -->
+    <div class="cuddle-teddy-duo" id="cuddleTeddyDuo">
+      <svg viewBox="0 0 140 100" style="width:100%; height:100%;">
+        <!-- Teddy 1 (Left) -->
+        <circle cx="34" cy="30" r="10" fill="#D4A373" stroke="#fff" stroke-width="2"/>
+        <circle cx="34" cy="30" r="6" fill="#F4ACB7"/>
+        <ellipse cx="48" cy="45" rx="22" ry="18" fill="#E6BA95" stroke="#fff" stroke-width="2"/>
+        <circle cx="42" cy="42" r="3" fill="#2E1A2C"/>
+        <circle cx="52" cy="42" r="3" fill="#2E1A2C"/>
+        <ellipse cx="47" cy="47" rx="4" ry="2.8" fill="#FFFDFB"/>
+        <ellipse cx="47" cy="46" rx="1.5" ry="1" fill="#4A2545"/>
+        <circle cx="36" cy="46" r="3.5" fill="#FFAAA6" opacity="0.8"/>
+        <!-- Teddy 2 (Right) -->
+        <circle cx="106" cy="30" r="10" fill="#E6BA95" stroke="#fff" stroke-width="2"/>
+        <circle cx="106" cy="30" r="6" fill="#F4ACB7"/>
+        <ellipse cx="92" cy="45" rx="22" ry="18" fill="#D4A373" stroke="#fff" stroke-width="2"/>
+        <circle cx="88" cy="42" r="3" fill="#2E1A2C"/>
+        <circle cx="98" cy="42" r="3" fill="#2E1A2C"/>
+        <ellipse cx="93" cy="47" rx="4" ry="2.8" fill="#FFFDFB"/>
+        <ellipse cx="93" cy="46" rx="1.5" ry="1" fill="#4A2545"/>
+        <circle cx="104" cy="46" r="3.5" fill="#FFAAA6" opacity="0.8"/>
+        <!-- Shared Cuddle Blanket with Hearts -->
+        <ellipse cx="70" cy="74" rx="46" ry="22" fill="#F6D9E0" stroke="#E8A0B4" stroke-width="2"/>
+        <path d="M70 66 L67 62 Q64 59 67 56 Q70 53 71 57 Q72 53 75 56 Q78 59 75 62 Z" fill="#E63946"/>
+      </svg>
+    </div>
+
     <div class="yes-reveal" id="yesReveal">I'll pick the place. You just show up looking like you always do. Mine. Untouchable. I love you.</div>
   </div>
 </section>
@@ -1100,6 +1298,27 @@
     soundEnabled = !soundEnabled;
     soundIcon.textContent = soundEnabled ? '🔔' : '🔕';
     if(soundEnabled) playTone(600, 'sine', 0.15, 0.08);
+  });
+
+  // PEEKING TEDDY INTERACTION
+  const peekingBuddy = document.getElementById('peekingBuddy');
+  const buddyBubble = document.getElementById('buddyBubble');
+  const teddyCompliments = [
+    "Don't be mad at him for too long! 💖",
+    "Psst... you're looking extra cute today! ✨",
+    "He's really sorry, I promise! 🥺",
+    "You two are my favorite love story! 🧸",
+    "Go easy on him, he loves you to pieces! 💕"
+  ];
+  let compIdx = 0;
+
+  peekingBuddy.addEventListener('click', () => {
+    initAudio();
+    playTone(660, 'triangle', 0.2, 0.08);
+    buddyBubble.textContent = teddyCompliments[compIdx % teddyCompliments.length];
+    compIdx++;
+    buddyBubble.classList.add('show');
+    setTimeout(() => buddyBubble.classList.remove('show'), 2600);
   });
 
   // THEME SWITCHER
@@ -1365,7 +1584,6 @@
     reader.readAsDataURL(file);
   });
 
-  // Restore saved photos on page load
   for(let i=0; i<4; i++){
     const savedImg = localStorage.getItem('polaroid_saved_img_' + i);
     if(savedImg){
@@ -1485,7 +1703,6 @@
     btn.style.top = (Math.random()*(rect.height-36)) + 'px';
     btn.addEventListener('click', (e) => {
       playPopSfx();
-      // Combo floater
       const floater = document.createElement('div');
       floater.className = 'combo-floater';
       floater.textContent = `+1 Pop! 💖`;
@@ -1626,7 +1843,6 @@
     agreeBtn.classList.toggle('ready', agreeCheck.checked);
   });
 
-  // Signature drawing logic
   sctx.strokeStyle = '#4A2545';
   sctx.lineWidth = 3;
   sctx.lineCap = 'round';
@@ -1692,7 +1908,6 @@
     faultDodges = Math.min(faultDodges + 1, faultPhrases.length - 1);
     faultYours.textContent = faultPhrases[faultDodges];
 
-    // Show comic bubble
     faultBubble.textContent = faultTaunts[faultDodges % faultTaunts.length];
     faultBubble.style.left = (newLeft + 10) + 'px';
     faultBubble.style.top = (newTop - 10) + 'px';
@@ -1707,7 +1922,7 @@
     faultReveal.classList.add('show');
   });
 
-  // FORGIVENESS METER WITH LIVE MOOD EMOJI PROGRESSION
+  // FORGIVENESS METER
   const holdBtn = document.getElementById('holdBtn');
   const meterFill = document.getElementById('meterFill');
   const meterLabel = document.getElementById('meterLabel');
@@ -1783,12 +1998,13 @@
   }
   petalLoop();
 
-  // RUNAWAY NO BUTTON (CONVERTS TO YES + COMIC BUBBLE)
+  // RUNAWAY NO BUTTON
   const noBtn = document.getElementById('noBtn');
   const yesBtn = document.getElementById('yesBtn');
   const askBox = document.querySelector('.ask-box');
   const noBubble = document.getElementById('noBubble');
   const yesReveal = document.getElementById('yesReveal');
+  const cuddleTeddyDuo = document.getElementById('cuddleTeddyDuo');
   let dodges = 0;
   const noPhrases = ["No", "Wait, really?", "Are you sure, Bujji?", "Think again... 🤔", "Don't be stubborn!", "Yes, but with extra snacks 🍟"];
   const noTaunts = ["Whoosh!", "Nope!", "Can't click this!", "Try again! 😜", "Almost got it!"];
@@ -1882,6 +2098,7 @@
 
   function triggerYes(){
     playCelebrationSfx();
+    cuddleTeddyDuo.classList.add('show');
     yesReveal.classList.add('show');
     dropHearts();
     burstConfetti();
