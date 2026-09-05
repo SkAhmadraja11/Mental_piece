@@ -88,6 +88,7 @@
   }
   @keyframes spinVinyl{ 100%{ transform:rotate(360deg); } }
 
+  /* GATE MODAL */
   body.gate-active{ overflow:hidden; height:100vh; }
   .gate{ position:fixed; inset:0; z-index:1000; background:linear-gradient(135deg, var(--plum), var(--plum-deep)); display:flex; align-items:center; justify-content:center; padding:24px; transition:opacity .6s ease, visibility .6s ease; }
   .gate.hidden{ opacity:0; visibility:hidden; pointer-events:none; }
@@ -101,8 +102,11 @@
   .gate-btn:hover{ transform:scale(1.05); }
   .gate-answer-echo{ font-family:'Fraunces',serif; font-style:italic; color:var(--gold); margin-bottom:16px; min-height:1.4em; font-size:1.05rem; }
   .gate-game{ position:relative; width:100%; height:230px; margin:6px auto 18px; background:rgba(255,255,255,.06); border-radius:16px; overflow:hidden; }
-  .gate-heart-btn{ position:absolute; background:none; border:none; font-size:1.7rem; cursor:pointer; color:var(--rose); animation:heartPop .35s ease; padding:4px; }
-  @keyframes heartPop{ from{ transform:scale(0);} to{ transform:scale(1);} }
+  .gate-heart-btn{ position:absolute; background:none; border:none; font-size:1.8rem; cursor:pointer; color:var(--rose); animation:floatWobble 2s ease-in-out infinite alternate; padding:4px; transition:transform .15s ease; }
+  .gate-heart-btn:hover{ transform:scale(1.25); }
+  @keyframes floatWobble{ 0%{ transform:translateY(0) rotate(-6deg); } 100%{ transform:translateY(-14px) rotate(6deg); } }
+  .combo-floater{ position:absolute; font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--gold); font-weight:700; pointer-events:none; animation:comboRise 0.8s ease-out forwards; }
+  @keyframes comboRise{ 0%{ opacity:1; transform:translateY(0) scale(0.9); } 100%{ opacity:0; transform:translateY(-35px) scale(1.3); } }
   .gate-progress-track{ width:100%; height:10px; border-radius:999px; background:rgba(255,255,255,.15); overflow:hidden; margin-bottom:8px; }
   .gate-progress-fill{ height:100%; width:0%; background:linear-gradient(90deg, var(--rose), var(--gold)); transition:width .2s ease; }
   .gate-count{ font-size:.85rem; color:var(--rose); margin-bottom:6px; }
@@ -153,13 +157,9 @@
     background:radial-gradient(circle at 50% 50%, rgba(255,143,178,0.28) 0%, rgba(255,143,178,0) 65%);
   }
 
-  /* OUR STORY TIMELINE (21 JAN, 14 FEB, 21 FEB) */
-  #timeline{
-    background:rgba(250,243,236,.88);
-  }
-  body.midnight-mode #timeline{
-    background:rgba(18, 10, 22, 0.92);
-  }
+  /* OUR STORY TIMELINE */
+  #timeline{ background:rgba(250,243,236,.88); }
+  body.midnight-mode #timeline{ background:rgba(18, 10, 22, 0.92); }
   .timeline-container{
     position:relative; max-width:760px; width:100%; margin:40px auto 0; text-align:left;
   }
@@ -202,18 +202,13 @@
   .timeline-title{
     font-family:'Fraunces',serif; font-size:1.3rem; margin:0 0 8px; color:var(--plum);
   }
-  body.midnight-mode .timeline-title{ color:var(--plum); }
   .timeline-text{
     font-size:0.98rem; line-height:1.6; margin:0; color:var(--plum-deep);
   }
 
-  /* HEARTBEAT & CALIBRATED DAYS COUNTER */
-  #counter{
-    background:rgba(246,217,224,.82);
-  }
-  body.midnight-mode #counter{
-    background:rgba(20, 9, 23, 0.88);
-  }
+  /* HEARTBEAT & CALIBRATED DAYS COUNTER WITH MILLISECONDS & ECG WAVE */
+  #counter{ background:rgba(246,217,224,.82); }
+  body.midnight-mode #counter{ background:rgba(20, 9, 23, 0.88); }
   .pulse-ring-container{
     position:relative; width:80px; height:80px; margin:0 auto 20px; display:flex; align-items:center; justify-content:center;
   }
@@ -235,7 +230,6 @@
     45%{ transform:scale(1.28); }
   }
 
-  /* QUICK MILESTONE SELECTOR TABS */
   .milestone-tabs{
     display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:20px auto 10px; max-width:640px;
   }
@@ -250,37 +244,40 @@
   }
 
   .counter-grid{
-    display:grid; grid-template-columns:repeat(4, 1fr); gap:16px; max-width:680px; width:100%; margin-top:24px;
+    display:grid; grid-template-columns:repeat(5, 1fr); gap:12px; max-width:760px; width:100%; margin-top:24px;
   }
-  @media(max-width:580px){
-    .counter-grid{ grid-template-columns:repeat(2, 1fr); }
+  @media(max-width:650px){
+    .counter-grid{ grid-template-columns:repeat(3, 1fr); }
   }
   .counter-box{
-    background:var(--card); border:1px solid var(--glass-border); border-radius:20px;
-    padding:20px 14px; box-shadow:var(--shadow-soft); text-align:center;
+    background:var(--card); border:1px solid var(--glass-border); border-radius:18px;
+    padding:18px 10px; box-shadow:var(--shadow-soft); text-align:center;
     transition:transform .2s ease, box-shadow .2s ease;
   }
   .counter-num{
-    font-family:'Fraunces',serif; font-size:clamp(2rem, 4.5vw, 2.8rem); font-weight:700; color:var(--gold); line-height:1; margin-bottom:6px;
+    font-family:'Fraunces',serif; font-size:clamp(1.8rem, 3.8vw, 2.5rem); font-weight:700; color:var(--gold); line-height:1; margin-bottom:6px;
   }
   .counter-unit{
-    font-family:'Space Mono',monospace; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--plum); font-weight:700;
-  }
-  .heartbeat-estimate{
-    margin-top:24px; font-family:'Space Mono',monospace; font-size:0.92rem; color:var(--rose);
-    background:rgba(74,37,69,0.06); padding:8px 20px; border-radius:999px; display:inline-flex; align-items:center; gap:8px;
-  }
-  body.midnight-mode .heartbeat-estimate{
-    background:rgba(255,143,178,0.1);
+    font-family:'Space Mono',monospace; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:var(--plum); font-weight:700;
   }
 
-  /* BIOMETRIC ANGER SCANNER (PLAYFUL PRANK GAG) */
-  #scanner{
-    background:rgba(250,243,236,.85);
+  /* ECG HEARTBEAT WAVE */
+  .ecg-container{
+    width:100%; max-width:480px; height:45px; margin:20px auto 0; position:relative; overflow:hidden;
   }
-  body.midnight-mode #scanner{
-    background:rgba(18, 10, 22, 0.9);
+  .ecg-svg{ width:100%; height:100%; stroke:var(--rose); stroke-width:2.5; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .ecg-pulse{ stroke-dasharray:600; stroke-dashoffset:600; animation:ecgBeat 2.4s linear infinite; }
+  @keyframes ecgBeat{ to{ stroke-dashoffset:0; } }
+
+  .heartbeat-estimate{
+    margin-top:14px; font-family:'Space Mono',monospace; font-size:0.92rem; color:var(--rose);
+    background:rgba(74,37,69,0.06); padding:8px 20px; border-radius:999px; display:inline-flex; align-items:center; gap:8px;
   }
+  body.midnight-mode .heartbeat-estimate{ background:rgba(255,143,178,0.1); }
+
+  /* BIOMETRIC ANGER SCANNER GAG */
+  #scanner{ background:rgba(250,243,236,.85); }
+  body.midnight-mode #scanner{ background:rgba(18, 10, 22, 0.9); }
   .scanner-box{
     max-width:440px; width:100%; background:var(--card); border:1px solid var(--glass-border);
     border-radius:24px; padding:32px 24px; margin-top:28px; box-shadow:var(--shadow-soft);
@@ -321,7 +318,7 @@
   .continue-btn.show{ opacity:1; pointer-events:auto; }
   .continue-btn:hover{ transform:scale(1.06); }
 
-  /* LETTER */
+  /* 3D REALISTIC SLIDING ENVELOPE & PARCHMENT LETTER */
   #letter{ background:rgba(250,243,236,.85); }
   body.midnight-mode #letter{ background:rgba(18, 10, 22, 0.9); }
   #nicknames{ background:rgba(74,37,69,.92); }
@@ -331,26 +328,44 @@
   #nicknames .love-item{ background:var(--card); }
   #nicknames .love-item p{ color:var(--plum); }
   #nicknames .love-item .nick{ font-family:'Fraunces',serif; font-weight:600; font-style:italic; color:var(--rose); display:block; margin-bottom:6px; font-size:1.1rem; }
-  .envelope{ width:220px; height:150px; margin:10px auto 0; cursor:pointer; position:relative; transition:transform .2s ease; }
-  .envelope:hover{ transform:translateY(-4px) rotate(-1deg); }
-  .envelope-body{ position:absolute; inset:0; background:var(--card); border:1px solid var(--blush); border-radius:8px; }
-  .envelope-flap{ position:absolute; top:0; left:0; right:0; height:75px; background:var(--rose); clip-path:polygon(0 0, 100% 0, 50% 100%); transform-origin:top; transition:transform .5s ease; }
-  .envelope.open .envelope-flap{ transform:rotateX(180deg); }
-  .envelope-seal{ position:absolute; top:60px; left:50%; transform:translate(-50%,0); font-size:1.4rem; color:var(--plum); animation:wiggle 2s ease-in-out infinite; }
-  @keyframes wiggle{ 0%,100%{transform:translate(-50%,0) rotate(-4deg);} 50%{transform:translate(-50%,0) rotate(4deg);} }
-  .open-hint{ margin-top:0; font-size:.9rem; color:var(--plum); opacity:.7; }
-  .letter-text{ max-width:540px; margin-top:30px; text-align:left; opacity:0; max-height:0; overflow:hidden; transition:opacity .7s ease, max-height 1s ease; }
-  .letter-text.show{ opacity:1; max-height:900px; }
-  .letter-text p{ font-family:'Fraunces',serif; font-size:1.12rem; line-height:1.9; color:var(--plum-deep); max-width:100%; }
-  .letter-text .sign{ font-family:'Caveat',cursive; font-size:1.6rem; color:var(--rose); text-align:right; margin-top:10px; }
 
-  /* POLAROID SCRAPBOOK */
-  #scrapbook{
-    background:rgba(246,217,224,.82); position:relative; overflow:hidden;
+  .envelope-wrapper{
+    position:relative; width:260px; height:180px; margin:20px auto 0; cursor:pointer; perspective:1000px;
+    transition:transform .3s ease;
   }
-  body.midnight-mode #scrapbook{
-    background:rgba(24, 11, 26, 0.88);
+  .envelope-wrapper:hover{ transform:scale(1.03) rotate(-1deg); }
+  .envelope-body{
+    position:absolute; inset:0; background:var(--card); border:2px solid var(--blush); border-radius:12px;
+    box-shadow:0 14px 30px rgba(74,37,69,0.15); z-index:2;
   }
+  .envelope-flap{
+    position:absolute; top:0; left:0; right:0; height:90px; background:var(--rose);
+    clip-path:polygon(0 0, 100 0, 50% 100%); clip-path:polygon(0 0, 100% 0, 50% 100%);
+    transform-origin:top; transition:transform .6s cubic-bezier(0.4, 0, 0.2, 1); z-index:4;
+  }
+  .envelope-wrapper.open .envelope-flap{ transform:rotateX(180deg); z-index:1; }
+  .envelope-seal{
+    position:absolute; top:72px; left:50%; transform:translate(-50%,0); width:36px; height:36px;
+    border-radius:50%; background:var(--gold); display:flex; align-items:center; justify-content:center;
+    font-size:1.1rem; color:var(--plum-deep); box-shadow:0 3px 8px rgba(0,0,0,0.2); z-index:5;
+    transition:transform .3s ease, opacity .3s ease;
+  }
+  .envelope-wrapper.open .envelope-seal{ opacity:0; transform:translate(-50%, 20px) scale(0.6); }
+
+  .letter-paper{
+    max-width:620px; width:100%; margin:30px auto 0; text-align:left; background:var(--card);
+    border:1px solid var(--blush); border-radius:16px; padding:36px 32px; box-shadow:var(--shadow-soft);
+    display:none; opacity:0; transform:translateY(40px) scale(0.95);
+    transition:opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .letter-paper.show{ display:block; opacity:1; transform:translateY(0) scale(1); }
+  .letter-paper p{ font-family:'Fraunces',serif; font-size:1.14rem; line-height:1.9; color:var(--plum-deep); max-width:100%; margin-bottom:20px; }
+  .letter-paper p:hover{ color:var(--plum); }
+  .letter-paper .sign{ font-family:'Caveat',cursive; font-size:1.8rem; color:var(--rose); text-align:right; margin-top:10px; }
+
+  /* POLAROID SCRAPBOOK WITH PHOTO UPLOAD */
+  #scrapbook{ background:rgba(246,217,224,.82); position:relative; overflow:hidden; }
+  body.midnight-mode #scrapbook{ background:rgba(24, 11, 26, 0.88); }
   .scrapbook-board{
     display:flex; flex-wrap:wrap; justify-content:center; gap:26px; max-width:960px; width:100%; margin-top:34px; perspective:1000px;
   }
@@ -369,11 +384,18 @@
     box-shadow:0 2px 5px rgba(0,0,0,0.08); border-radius:2px;
   }
   .polaroid-photo{
-    width:100%; height:160px; border-radius:4px; overflow:hidden;
+    width:100%; height:160px; border-radius:4px; overflow:hidden; position:relative;
     display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff;
+    background-size:cover; background-position:center;
   }
   .polaroid-photo svg{ width:48px; height:48px; filter:drop-shadow(0 4px 6px rgba(0,0,0,0.15)); margin-bottom:8px; }
   .polaroid-photo span{ font-family:'Space Mono',monospace; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; color:rgba(255,255,255,0.92); font-weight:700; }
+  .polaroid-upload-btn{
+    position:absolute; bottom:6px; right:6px; background:rgba(0,0,0,0.6); border:none; border-radius:50%;
+    width:28px; height:28px; color:#fff; font-size:0.8rem; cursor:pointer; display:flex; align-items:center; justify-content:center;
+    transition:transform .2s ease;
+  }
+  .polaroid-upload-btn:hover{ transform:scale(1.2); }
   .polaroid-caption{
     font-family:'Caveat',cursive; font-size:1.35rem; color:var(--plum); margin-top:14px; text-align:center; line-height:1.25;
   }
@@ -387,66 +409,28 @@
   .polaroid-card.flipped .polaroid-back-note{ display:flex; align-items:center; justify-content:center; text-align:center; }
   .scrapbook-hint{ margin-top:24px; font-size:0.88rem; color:var(--plum); opacity:0.75; }
 
-  /* APOLOGY COUPON BOOK (REDEEMABLE VOUCHERS) */
-  #coupons{
-    background:rgba(250,243,236,.88);
-  }
-  body.midnight-mode #coupons{
-    background:rgba(18, 10, 22, 0.92);
-  }
-  .coupon-grid{
-    display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:22px; max-width:860px; width:100%; margin-top:34px;
-  }
-  .coupon-card{
-    background:var(--card); border:2px dashed var(--gold); border-radius:18px; padding:24px 20px;
-    position:relative; overflow:hidden; box-shadow:var(--shadow-soft); text-align:left;
-  }
-  .coupon-card::before, .coupon-card::after{
-    content:''; position:absolute; top:50%; transform:translateY(-50%); width:20px; height:20px;
-    background:var(--cream); border-radius:50%;
-  }
-  body.midnight-mode .coupon-card::before, body.midnight-mode .coupon-card::after{
-    background:var(--cream);
-  }
+  /* APOLOGY COUPONS */
+  #coupons{ background:rgba(250,243,236,.88); }
+  body.midnight-mode #coupons{ background:rgba(18, 10, 22, 0.92); }
+  .coupon-grid{ display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:22px; max-width:860px; width:100%; margin-top:34px; }
+  .coupon-card{ background:var(--card); border:2px dashed var(--gold); border-radius:18px; padding:24px 20px; position:relative; overflow:hidden; box-shadow:var(--shadow-soft); text-align:left; }
+  .coupon-card::before, .coupon-card::after{ content:''; position:absolute; top:50%; transform:translateY(-50%); width:20px; height:20px; background:var(--cream); border-radius:50%; }
+  body.midnight-mode .coupon-card::before, body.midnight-mode .coupon-card::after{ background:var(--cream); }
   .coupon-card::before{ left:-10px; }
   .coupon-card::after{ right:-10px; }
-  .coupon-tag{
-    font-family:'Space Mono',monospace; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em;
-    background:rgba(217, 164, 65, 0.15); color:var(--gold); padding:4px 10px; border-radius:6px; font-weight:700;
-  }
-  .coupon-title{
-    font-family:'Fraunces',serif; font-size:1.25rem; color:var(--plum); margin:12px 0 8px;
-  }
-  .coupon-desc{
-    font-size:0.92rem; color:var(--plum-deep); line-height:1.5; margin:0 0 16px;
-  }
-  .coupon-redeem-btn{
-    width:100%; padding:10px 16px; border-radius:999px; border:none; background:var(--plum);
-    color:var(--cream); font-weight:700; font-family:'Nunito',sans-serif; cursor:pointer;
-    transition:transform .15s ease, background .2s ease;
-  }
+  .coupon-tag{ font-family:'Space Mono',monospace; font-size:0.75rem; text-transform:uppercase; letter-spacing:0.06em; background:rgba(217, 164, 65, 0.15); color:var(--gold); padding:4px 10px; border-radius:6px; font-weight:700; }
+  .coupon-title{ font-family:'Fraunces',serif; font-size:1.25rem; color:var(--plum); margin:12px 0 8px; }
+  .coupon-desc{ font-size:0.92rem; color:var(--plum-deep); line-height:1.5; margin:0 0 16px; }
+  .coupon-redeem-btn{ width:100%; padding:10px 16px; border-radius:999px; border:none; background:var(--plum); color:var(--cream); font-weight:700; font-family:'Nunito',sans-serif; cursor:pointer; transition:transform .15s ease; }
   body.midnight-mode .coupon-redeem-btn{ background:var(--gold); color:var(--plum-deep); }
   .coupon-redeem-btn:hover{ transform:scale(1.03); }
-  .coupon-stamp{
-    position:absolute; inset:0; background:rgba(255,255,255,0.92); backdrop-filter:blur(2px);
-    display:none; align-items:center; justify-content:center; flex-direction:column;
-    z-index:5; animation:stampThud .35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  }
+  .coupon-stamp{ position:absolute; inset:0; background:rgba(255,255,255,0.92); backdrop-filter:blur(2px); display:none; align-items:center; justify-content:center; flex-direction:column; z-index:5; animation:stampThud .35s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
   body.midnight-mode .coupon-stamp{ background:rgba(29, 14, 33, 0.94); }
   .coupon-stamp.stamped{ display:flex; }
-  @keyframes stampThud{
-    0%{ transform:scale(2.5); opacity:0; }
-    100%{ transform:scale(1); opacity:1; }
-  }
-  .wax-seal{
-    width:90px; height:90px; border-radius:50%; border:3px solid var(--gold);
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    background:radial-gradient(circle, #ffe699 0%, #d9a441 100%); color:#2e1a2c;
-    font-family:'Space Mono',monospace; font-size:0.7rem; font-weight:700; text-align:center;
-    box-shadow:0 6px 18px var(--gold-glow); transform:rotate(-8deg);
-  }
+  @keyframes stampThud{ 0%{ transform:scale(2.5); opacity:0; } 100%{ transform:scale(1); opacity:1; } }
+  .wax-seal{ width:90px; height:90px; border-radius:50%; border:3px solid var(--gold); display:flex; flex-direction:column; align-items:center; justify-content:center; background:radial-gradient(circle, #ffe699 0%, #d9a441 100%); color:#2e1a2c; font-family:'Space Mono',monospace; font-size:0.7rem; font-weight:700; text-align:center; box-shadow:0 6px 18px var(--gold-glow); transform:rotate(-8deg); }
 
-  /* WHY I LOVE YOU */
+  /* WHY I LOVE YOU & REASONS */
   #love{ background:rgba(246,217,224,.82); }
   body.midnight-mode #love{ background:rgba(20, 9, 23, 0.88); }
   .love-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:18px; max-width:760px; width:100%; margin-top:30px; }
@@ -456,7 +440,6 @@
   .love-item p{ font-size:.98rem; margin:0; color:var(--plum); }
   body.midnight-mode .love-item p{ color:var(--plum-deep); }
 
-  /* REASONS */
   #reasons{ background:rgba(250,243,236,.85); }
   body.midnight-mode #reasons{ background:rgba(18, 10, 22, 0.9); }
   #strength{ background:rgba(246,217,224,.82); }
@@ -472,7 +455,7 @@
   body.midnight-mode .back{ background:#3a1435; color:#fedbe7; border:1px solid rgba(255,143,178,0.25); }
   .tap-hint{ margin-top:28px; font-size:.85rem; color:var(--plum); opacity:.6; }
 
-  /* TERMS GAG */
+  /* TERMS GAG WITH DIGITAL SIGNATURE & OFFICIAL CERTIFICATE */
   #terms{ background:rgba(74,37,69,.92); color:var(--blush); }
   body.midnight-mode #terms{ background:rgba(26, 12, 28, 0.95); }
   #terms h2{ color:var(--blush); }
@@ -482,14 +465,32 @@
   .contract h3:first-child{ margin-top:0; }
   .agree-row{ margin-top:18px; display:flex; align-items:center; gap:10px; font-size:.95rem; }
   .agree-row input{ width:18px; height:18px; }
+  
+  .signature-box{
+    margin-top:20px; width:100%; max-width:440px; background:var(--cream); border-radius:12px; padding:14px;
+    border:2px dashed var(--gold); text-align:center;
+  }
+  .signature-box h4{ margin:0 0 8px; font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--plum); text-transform:uppercase; }
+  #signaturePad{ background:#fff; border-radius:8px; width:100%; height:100px; cursor:crosshair; touch-action:none; }
+  .sig-btn-row{ display:flex; gap:10px; justify-content:center; margin-top:10px; }
+  .sig-clear-btn{ padding:6px 16px; border-radius:999px; border:1px solid var(--plum); background:transparent; font-size:0.75rem; font-family:'Nunito',sans-serif; cursor:pointer; color:var(--plum); }
+  
   .agree-btn{ margin-top:18px; padding:14px 30px; border-radius:999px; border:none; background:var(--gold); color:var(--plum-deep); font-weight:700; font-family:'Nunito',sans-serif; cursor:not-allowed; opacity:.5; transition:opacity .3s ease, transform .15s ease; }
   .agree-btn.ready{ cursor:pointer; opacity:1; }
   .agree-btn.ready:hover{ transform:scale(1.05); }
   .scroll-nudge{ margin-top:10px; font-size:.8rem; color:var(--rose); opacity:.85; }
-  .contract-done{ margin-top:20px; font-family:'Fraunces',serif; font-style:italic; font-size:1.1rem; opacity:0; transform:translateY(8px); transition:opacity .5s ease, transform .5s ease; }
-  .contract-done.show{ opacity:1; transform:translateY(0); }
 
-  /* WHOSE FAULT TRICK */
+  /* ROYAL CERTIFICATE MODAL */
+  .certificate-card{
+    margin-top:24px; max-width:520px; width:100%; background:#fff; border:8px double var(--gold);
+    border-radius:16px; padding:28px 24px; color:var(--plum-deep); display:none; animation:stampThud .4s ease;
+    box-shadow:0 18px 40px rgba(0,0,0,0.3); text-align:center;
+  }
+  .certificate-card.show{ display:block; }
+  .cert-title{ font-family:'Fraunces',serif; font-size:1.5rem; color:var(--plum); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:10px; }
+  .cert-seal-icon{ font-size:2.8rem; color:var(--gold); margin-bottom:10px; }
+
+  /* WHOSE FAULT TRICK & RUNAWAY COMIC BUBBLE */
   #fault{ background:rgba(250,243,236,.85); }
   body.midnight-mode #fault{ background:rgba(18, 10, 22, 0.9); }
   .fault-box{ position:relative; width:100%; max-width:560px; height:240px; margin-top:26px; }
@@ -499,13 +500,21 @@
   .fault-reveal{ margin-top:130px; font-family:'Fraunces',serif; font-size:1.3rem; color:var(--plum); opacity:0; transform:translateY(10px); transition:opacity .5s ease, transform .5s ease; }
   .fault-reveal.show{ opacity:1; transform:translateY(0); }
 
-  /* FORGIVENESS METER */
+  .comic-bubble{
+    position:absolute; background:#fff; color:#2e1a2c; font-family:'Space Mono',monospace; font-size:0.75rem;
+    padding:4px 10px; border-radius:12px; border:1px solid var(--plum); box-shadow:0 4px 12px rgba(0,0,0,0.15);
+    white-space:nowrap; pointer-events:none; opacity:0; transition:opacity .2s ease; transform:translateY(-100%);
+  }
+  .comic-bubble.show{ opacity:1; }
+
+  /* FORGIVENESS METER WITH LIVE MOOD EMOJI PROGRESSION */
   #meter{ background:rgba(246,217,224,.82); }
   body.midnight-mode #meter{ background:rgba(20, 9, 23, 0.88); }
   .meter-wrap{ width:100%; max-width:420px; margin-top:26px; }
+  .meter-mood-badge{ font-family:'Fraunces',serif; font-size:1.25rem; color:var(--plum); margin-bottom:12px; font-weight:600; }
   .meter-track{ width:100%; height:26px; border-radius:999px; background:var(--card); overflow:hidden; border:1px solid var(--glass-border); }
   .meter-fill{ height:100%; width:0%; background:linear-gradient(90deg, var(--rose), var(--gold)); transition:width .12s ease; }
-  .hold-btn{ margin-top:22px; padding:18px 36px; border-radius:999px; border:none; background:var(--plum); color:var(--cream); font-family:'Nunito',sans-serif; font-weight:700; font-size:1.05rem; cursor:pointer; user-select:none; transition:transform .1s ease; }
+  .hold-btn{ margin-top:22px; padding:18px 36px; border-radius:999px; border:none; background:var(--plum); color:var(--cream); font-family:'Nunito',sans-serif; font-weight:700; font-size:1.05rem; cursor:pointer; user-select:none; transition:transform .1s ease, box-shadow .2s ease; }
   body.midnight-mode .hold-btn{ background:var(--rose); color:var(--plum-deep); }
   .hold-btn:active{ transform:scale(.96); }
   .meter-label{ margin-top:14px; font-size:.95rem; color:var(--plum); opacity:.85; }
@@ -607,70 +616,52 @@
   <div class="scroll-hint"><span>keep going</span><span class="chevron"></span></div>
 </section>
 
-<!-- OUR STORY ROADMAP / TIMELINE (21 JAN, 14 FEB, 21 FEB) -->
+<!-- OUR STORY ROADMAP (21 JAN, 14 FEB, 21 FEB) -->
 <section id="timeline">
   <h2>The Milestones of Us</h2>
   <p>Every single date that reshaped my universe forever.</p>
 
   <div class="timeline-container">
-    <!-- Milestone 1: 21 Jan 2023 -->
     <div class="timeline-node left">
       <div class="timeline-icon">&#10024;</div>
       <div class="timeline-card tilt-card">
         <span class="timeline-date">21 JAN 2023</span>
         <h3 class="timeline-title">The Day Our Orbits Collided</h3>
-        <p class="timeline-text">
-          The day I first met you. I had no idea that a single conversation would become the most pivotal moment of my year.
-          You walked in, and everything else in the background became blurry.
-        </p>
+        <p class="timeline-text">The day I first met you. I had no idea that a single conversation would become the most pivotal moment of my life. You walked in, and everything else in the background became blurry.</p>
         <div class="tilt-sheen"></div>
       </div>
     </div>
-
-    <!-- Milestone 2: 14 Feb 2023 -->
     <div class="timeline-node right">
       <div class="timeline-icon">&#128141;</div>
       <div class="timeline-card tilt-card">
         <span class="timeline-date">14 FEB 2023</span>
         <h3 class="timeline-title">Heart on the Line (The Proposal)</h3>
-        <p class="timeline-text">
-          Valentine's Day. No hesitation, no doubts. Asking you was the easiest, boldest, most sure decision my heart has ever made.
-          And hearing your yes made me the richest man alive.
-        </p>
+        <p class="timeline-text">Valentine's Day. No hesitation, no doubts. Asking you was the easiest, boldest, most sure decision my heart has ever made. Hearing your yes made me the happiest person alive.</p>
         <div class="tilt-sheen"></div>
       </div>
     </div>
-
-    <!-- Milestone 3: 21 Feb 2023 -->
     <div class="timeline-node left">
       <div class="timeline-icon">&#128646;</div>
       <div class="timeline-card tilt-card">
         <span class="timeline-date">21 FEB 2023</span>
         <h3 class="timeline-title">The First Reunion</h3>
-        <p class="timeline-text">
-          Exactly one month after meeting you, I was on my way to see you in person.
-          Counting down every single kilometer just to see that smile right in front of me.
-        </p>
+        <p class="timeline-text">Exactly one month after meeting you, I was on my way to see you in person. Counting down every single kilometer just to see that smile right in front of me.</p>
         <div class="tilt-sheen"></div>
       </div>
     </div>
-
-    <!-- Milestone 4: Today -->
     <div class="timeline-node right">
       <div class="timeline-icon">&#128147;</div>
       <div class="timeline-card tilt-card">
         <span class="timeline-date">TODAY & FOREVER</span>
         <h3 class="timeline-title">Still Hopelessly in Love</h3>
-        <p class="timeline-text">
-          Over 1,300+ days later, through laughter, petty fights, late night snacks, and quiet silences &mdash; you are still my first and only choice.
-        </p>
+        <p class="timeline-text">Over 1,300+ days later, through laughter, petty fights, late night snacks, and quiet silences &mdash; you are still my first and only choice.</p>
         <div class="tilt-sheen"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- LIVE HEARTBEAT & CALIBRATED LOVE COUNTER -->
+<!-- LIVE HEARTBEAT & CALIBRATED LOVE COUNTER WITH MILLISECONDS & ECG -->
 <section id="counter">
   <div class="pulse-ring-container">
     <div class="pulse-ring"></div>
@@ -679,7 +670,6 @@
   <h2>The Time I've Spent Loving You</h2>
   <p>Calibrated directly to our story. Every tick is another second I chose you.</p>
 
-  <!-- QUICK MILESTONE SELECTOR TABS -->
   <div class="milestone-tabs">
     <button class="milestone-pill active" id="tabMet" data-date="2023-01-21">Since We Met (21 Jan 2023)</button>
     <button class="milestone-pill" id="tabProposed" data-date="2023-02-14">Since The Proposal (14 Feb 2023)</button>
@@ -707,10 +697,22 @@
       <div class="counter-unit">Seconds</div>
       <div class="tilt-sheen"></div>
     </div>
+    <div class="counter-box tilt-card">
+      <div class="counter-num" id="cntMillis">00</div>
+      <div class="counter-unit">Millis</div>
+      <div class="tilt-sheen"></div>
+    </div>
+  </div>
+
+  <!-- ANIMATED ECG PULSE LINE -->
+  <div class="ecg-container">
+    <svg class="ecg-svg" viewBox="0 0 500 45">
+      <path class="ecg-pulse" d="M0,25 L160,25 L175,8 L190,40 L205,15 L220,32 L235,25 L500,25" />
+    </svg>
   </div>
 
   <div class="heartbeat-estimate">
-    <span>&#128147;</span> ≈ <span id="cntHeartbeats">0</span> heartbeats of mine dedicated to you
+    <span>&#128147;</span> ≈ <span id="cntHeartbeats">0</span> heartbeats dedicated entirely to you
   </div>
 </section>
 
@@ -739,16 +741,18 @@
   <button class="continue-btn" id="loadContinue">continue anyway &rarr;</button>
 </section>
 
-<!-- LETTER -->
+<!-- 3D SLIDING PARCHMENT ENVELOPE & LETTER -->
 <section id="letter">
   <h2>Something I should say properly</h2>
-  <p class="open-hint">Open the letter</p>
-  <div class="envelope" id="envelope">
+  <p class="open-hint">Tap the wax seal to break and open the letter</p>
+  
+  <div class="envelope-wrapper" id="envelopeWrapper">
     <div class="envelope-body"></div>
     <div class="envelope-flap"></div>
     <div class="envelope-seal">&#10084;</div>
   </div>
-  <div class="letter-text" id="letterText">
+
+  <div class="letter-paper" id="letterPaper">
     <p>
       Before anything else, let me say this properly: you are beautiful in a way that has nothing to do with mirrors or good
       lighting &mdash; it's in how you show up for people, in the way your eyes give away exactly what you're feeling before you say
@@ -773,18 +777,19 @@
   </div>
 </section>
 
-<!-- DRAGGABLE POLAROID SCRAPBOOK WITH REAL DATES -->
+<!-- DRAGGABLE POLAROID SCRAPBOOK WITH REAL PHOTO UPLOAD & LOCALSTORAGE -->
 <section id="scrapbook">
   <h2>Moments We're Made Of</h2>
-  <p>Drag them around, pile them up, and tap any polaroid to flip it over for a secret note.</p>
+  <p>Drag them around, pile them up, and tap any polaroid to flip. Tap 📷 to insert our real photo!</p>
 
   <div class="scrapbook-board" id="scrapbookBoard">
     <!-- Polaroid 1 -->
-    <div class="polaroid-card tilt-card" style="transform: rotate(-3deg);">
+    <div class="polaroid-card tilt-card" data-idx="0" style="transform: rotate(-3deg);">
       <div class="polaroid-tape"></div>
-      <div class="polaroid-photo" style="background:linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
+      <div class="polaroid-photo" id="photo0" style="background:linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
         <span>21 Jan 2023</span>
+        <button class="polaroid-upload-btn" title="Upload real photo" onclick="triggerUpload(0, event)">📷</button>
       </div>
       <div class="polaroid-back-note">
         "The very first day. You were so shy at first, and now you won't stop bullying me. Wouldn't trade it for anything."
@@ -794,11 +799,12 @@
     </div>
 
     <!-- Polaroid 2 -->
-    <div class="polaroid-card tilt-card" style="transform: rotate(4deg);">
+    <div class="polaroid-card tilt-card" data-idx="1" style="transform: rotate(4deg);">
       <div class="polaroid-tape" style="transform: translateX(-50%) rotate(2deg);"></div>
-      <div class="polaroid-photo" style="background:linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">
+      <div class="polaroid-photo" id="photo1" style="background:linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.4z"/></svg>
         <span>14 Feb 2023</span>
+        <button class="polaroid-upload-btn" title="Upload real photo" onclick="triggerUpload(1, event)">📷</button>
       </div>
       <div class="polaroid-back-note">
         "Valentine's proposal. My palms were sweaty, my heartbeat was off the charts, but saying yes to you was the easiest answer ever."
@@ -808,11 +814,12 @@
     </div>
 
     <!-- Polaroid 3 -->
-    <div class="polaroid-card tilt-card" style="transform: rotate(-2deg);">
+    <div class="polaroid-card tilt-card" data-idx="2" style="transform: rotate(-2deg);">
       <div class="polaroid-tape"></div>
-      <div class="polaroid-photo" style="background:linear-gradient(135deg, #f6d365 0%, #fda085 100%);">
+      <div class="polaroid-photo" id="photo2" style="background:linear-gradient(135deg, #f6d365 0%, #fda085 100%);">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
         <span>21 Feb 2023</span>
+        <button class="polaroid-upload-btn" title="Upload real photo" onclick="triggerUpload(2, event)">📷</button>
       </div>
       <div class="polaroid-back-note">
         "Exactly one month later, rushing to meet you. I literally couldn't wait another day just to see you laugh in person."
@@ -822,11 +829,12 @@
     </div>
 
     <!-- Polaroid 4 -->
-    <div class="polaroid-card tilt-card" style="transform: rotate(3deg);">
+    <div class="polaroid-card tilt-card" data-idx="3" style="transform: rotate(3deg);">
       <div class="polaroid-tape" style="transform: translateX(-50%) rotate(-1deg);"></div>
-      <div class="polaroid-photo" style="background:linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);">
+      <div class="polaroid-photo" id="photo3" style="background:linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
         <span>Permanent Chaos</span>
+        <button class="polaroid-upload-btn" title="Upload real photo" onclick="triggerUpload(3, event)">📷</button>
       </div>
       <div class="polaroid-back-note">
         "You steal my snacks, blame me for everything, make fun of me daily... and I wouldn't have it any other way, my Rasagulla."
@@ -835,76 +843,46 @@
       <div class="tilt-sheen"></div>
     </div>
   </div>
-  <div class="scrapbook-hint">💡 Tap any polaroid to flip & reveal the note | Drag to pin them anywhere!</div>
+  <input type="file" id="polaroidFileInput" accept="image/*" style="display:none;">
+  <div class="scrapbook-hint">💡 Tap any polaroid to flip & reveal the note | Tap 📷 on any photo to put your real picture!</div>
 </section>
 
-<!-- APOLOGY COUPON BOOK (FEATURE 5) -->
+<!-- APOLOGY COUPON BOOK -->
 <section id="coupons">
   <h2>The Apology Coupon Book</h2>
   <p>Non-refundable. Legally binding vouchers redeemable exclusively by Her Royal Highness.</p>
 
   <div class="coupon-grid">
-    <!-- Coupon 1 -->
     <div class="coupon-card tilt-card">
       <span class="coupon-tag">VOUCHER #01</span>
       <h3 class="coupon-title">Win 1 Argument Instantly</h3>
       <p class="coupon-desc">Valid anytime, anywhere. Apologizer must immediately concede, say "You were right, as usual", and surrender.</p>
       <button class="coupon-redeem-btn">Redeem Voucher</button>
-      <div class="coupon-stamp">
-        <div class="wax-seal">
-          <span>CLAIMED</span>
-          <span>&#10084;</span>
-          <span>APPROVED</span>
-        </div>
-      </div>
+      <div class="coupon-stamp"><div class="wax-seal"><span>CLAIMED</span><span>&#10084;</span><span>APPROVED</span></div></div>
       <div class="tilt-sheen"></div>
     </div>
-
-    <!-- Coupon 2 -->
     <div class="coupon-card tilt-card">
       <span class="coupon-tag">VOUCHER #02</span>
       <h3 class="coupon-title">Late-Night Ice Cream & Snack Run</h3>
       <p class="coupon-desc">Boy covers 100% of the cost, braves the cold, and brings whatever craving you demand, no questions asked.</p>
       <button class="coupon-redeem-btn">Redeem Voucher</button>
-      <div class="coupon-stamp">
-        <div class="wax-seal">
-          <span>CLAIMED</span>
-          <span>&#10084;</span>
-          <span>APPROVED</span>
-        </div>
-      </div>
+      <div class="coupon-stamp"><div class="wax-seal"><span>CLAIMED</span><span>&#10084;</span><span>APPROVED</span></div></div>
       <div class="tilt-sheen"></div>
     </div>
-
-    <!-- Coupon 3 -->
     <div class="coupon-card tilt-card">
       <span class="coupon-tag">VOUCHER #03</span>
       <h3 class="coupon-title">Total Date Night Veto Power</h3>
       <p class="coupon-desc">You pick the movie, the restaurant, and what we wear. Boy's only job is to show up and look in awe of you.</p>
       <button class="coupon-redeem-btn">Redeem Voucher</button>
-      <div class="coupon-stamp">
-        <div class="wax-seal">
-          <span>CLAIMED</span>
-          <span>&#10084;</span>
-          <span>APPROVED</span>
-        </div>
-      </div>
+      <div class="coupon-stamp"><div class="wax-seal"><span>CLAIMED</span><span>&#10084;</span><span>APPROVED</span></div></div>
       <div class="tilt-sheen"></div>
     </div>
-
-    <!-- Coupon 4 -->
     <div class="coupon-card tilt-card">
       <span class="coupon-tag">VOUCHER #04</span>
       <h3 class="coupon-title">Unlimited Head Scratches & Cuddles</h3>
       <p class="coupon-desc">Redeemable for a minimum of 45 continuous minutes without Boy complaining his arm fell asleep.</p>
       <button class="coupon-redeem-btn">Redeem Voucher</button>
-      <div class="coupon-stamp">
-        <div class="wax-seal">
-          <span>CLAIMED</span>
-          <span>&#10084;</span>
-          <span>APPROVED</span>
-        </div>
-      </div>
+      <div class="coupon-stamp"><div class="wax-seal"><span>CLAIMED</span><span>&#10084;</span><span>APPROVED</span></div></div>
       <div class="tilt-sheen"></div>
     </div>
   </div>
@@ -946,10 +924,10 @@
   <div class="love-grid" id="strengthGrid"></div>
 </section>
 
-<!-- TERMS GAG -->
+<!-- TERMS GAG WITH DIGITAL SIGNATURE PAD & ROYAL CERTIFICATE -->
 <section id="terms">
   <h2>The forgiveness agreement</h2>
-  <p class="lead">Standard terms. Please scroll to the bottom before accepting.</p>
+  <p class="lead">Standard terms. Please scroll to the bottom, sign, and accept.</p>
   <div class="contract" id="contract">
     <h3>1. Definitions</h3>
     <p>"I" refers to the Apologizer. "You" refers to the single most important person in this document's existence.</p>
@@ -966,33 +944,57 @@
     <h3>7. Compensation</h3>
     <p>Payable in hugs, apology snacks, and one (1) date night of the Complainant's choosing.</p>
     <h3>8. Final clause</h3>
-    <p>By scrolling this far, you have shown remarkable patience. That alone is one more reason I love you. You may now accept below.</p>
+    <p>By scrolling this far, you have shown remarkable patience. That alone is one more reason I love you. Please provide your royal signature below.</p>
   </div>
   <div class="scroll-nudge" id="scrollNudge">keep scrolling inside the box &darr;</div>
+  
   <div class="agree-row">
     <input type="checkbox" id="agreeCheck" disabled>
     <label for="agreeCheck">I have read the terms (mostly) and choose to forgive the Apologizer</label>
   </div>
-  <button class="agree-btn" id="agreeBtn">Accept terms</button>
-  <div class="contract-done" id="contractDone">Signed, sealed, forgiven. Legally binding in my heart.</div>
+
+  <!-- DIGITAL SIGNATURE PAD -->
+  <div class="signature-box" id="sigBox" style="display:none;">
+    <h4>Draw Your Royal Signature or a Heart:</h4>
+    <canvas id="signaturePad" width="380" height="100"></canvas>
+    <div class="sig-btn-row">
+      <button class="sig-clear-btn" id="sigClearBtn">Clear</button>
+    </div>
+  </div>
+
+  <button class="agree-btn" id="agreeBtn">Sign & Accept terms</button>
+
+  <!-- OFFICIAL ROYAL CERTIFICATE -->
+  <div class="certificate-card" id="certificateCard">
+    <div class="cert-seal-icon">&#128081;</div>
+    <div class="cert-title">Royal Certificate of Forgiveness</div>
+    <p style="font-size:1rem; margin:10px 0; color:var(--plum-deep);">
+      This certifies that <strong><span class="fillMyName">me</span></strong> has been officially, fully, and unconditionally forgiven by <strong>Her Royal Highness <span class="fillName">you</span></strong>.
+    </p>
+    <p style="font-family:'Space Mono',monospace; font-size:0.8rem; color:var(--gold); margin-top:14px;">
+      STATUS: VALID IN PERPETUITY &bull; SIGNED & SEALED
+    </p>
+  </div>
 </section>
 
-<!-- WHOSE FAULT TRICK -->
+<!-- WHOSE FAULT TRICK WITH COMIC BUBBLE -->
 <section id="fault">
   <h2>Quick question</h2>
   <p>Whose fault was it, really?</p>
   <div class="fault-box">
     <button class="fault-mine" id="faultMine">100% mine</button>
     <button class="fault-yours" id="faultYours">Actually, yours</button>
+    <div class="comic-bubble" id="faultBubble"></div>
     <div class="fault-reveal" id="faultReveal">Correct answer. Glad we agree.</div>
   </div>
 </section>
 
-<!-- FORGIVENESS METER -->
+<!-- FORGIVENESS METER WITH LIVE MOOD EMOJI PROGRESSION -->
 <section id="meter">
   <h2>The forgiveness meter</h2>
   <p>Press and hold. Let's see how far we get.</p>
   <div class="meter-wrap">
+    <div class="meter-mood-badge" id="meterMoodBadge">😤 Still annoyed...</div>
     <div class="meter-track"><div class="meter-fill" id="meterFill"></div></div>
     <div class="meter-label" id="meterLabel">0% forgiven</div>
   </div>
@@ -1010,6 +1012,7 @@
     <div class="btn-row">
       <button class="yes-btn" id="yesBtn">Yes, obviously</button>
       <button class="no-btn" id="noBtn">No</button>
+      <div class="comic-bubble" id="noBubble"></div>
     </div>
     <div class="yes-reveal" id="yesReveal">I'll pick the place. You just show up looking like you always do. Mine. Untouchable. I love you.</div>
   </div>
@@ -1020,11 +1023,8 @@
 </footer>
 
 <script>
-  // AUDIO SYNTHESIZER (ZERO EXTERNAL DEPENDENCY)
-  let audioCtx = null;
-  let soundEnabled = true;
-  let musicPlaying = false;
-  let musicInterval = null;
+  // AUDIO SYNTHESIZER
+  let audioCtx = null, soundEnabled = true, musicPlaying = false, musicInterval = null;
 
   function initAudio(){
     if(!audioCtx){
@@ -1054,20 +1054,16 @@
 
   function playPopSfx(){ playTone(540, 'sine', 0.12, 0.1); }
   function playFlipSfx(){ playTone(440, 'triangle', 0.2, 0.06); }
-  function playDodgeSfx(){ playTone(280 + Math.random()*200, 'sine', 0.14, 0.08); }
+  function playDodgeSfx(){ playTone(300 + Math.random()*240, 'sine', 0.14, 0.08); }
   function playCelebrationSfx(){
     const chord = [523.25, 659.25, 783.99, 1046.50];
-    chord.forEach((note, i) => {
-      setTimeout(() => playTone(note, 'sine', 0.6, 0.1), i * 110);
-    });
+    chord.forEach((note, i) => { setTimeout(() => playTone(note, 'sine', 0.6, 0.1), i * 110); });
   }
 
-  // PROCEDURAL ROMANTIC MUSIC (CANON-INSPIRED LOFI ARPEGGIO)
+  // PROCEDURAL ROMANTIC MUSIC
   const romanticMelody = [
-    261.63, 329.63, 392.00, 523.25,
-    220.00, 261.63, 329.63, 440.00,
-    174.61, 220.00, 261.63, 349.23,
-    196.00, 246.94, 293.66, 392.00
+    261.63, 329.63, 392.00, 523.25, 220.00, 261.63, 329.63, 440.00,
+    174.61, 220.00, 261.63, 349.23, 196.00, 246.94, 293.66, 392.00
   ];
   let noteIndex = 0;
 
@@ -1106,7 +1102,7 @@
     if(soundEnabled) playTone(600, 'sine', 0.15, 0.08);
   });
 
-  // THEME SWITCHER (DAYLIGHT / MIDNIGHT CANDLELIGHT)
+  // THEME SWITCHER
   const themeToggleBtn = document.getElementById('themeToggleBtn');
   const themeIcon = document.getElementById('themeIcon');
   const themeLabel = document.getElementById('themeLabel');
@@ -1119,46 +1115,32 @@
     localStorage.setItem('romantic_theme', isMidnight ? 'midnight' : 'daylight');
   }
   themeToggleBtn.addEventListener('click', toggleTheme);
-  if(localStorage.getItem('romantic_theme') === 'midnight'){
-    toggleTheme();
-  }
+  if(localStorage.getItem('romantic_theme') === 'midnight') toggleTheme();
 
-  // NIGHT SKY / FIREFLIES PARTICLES
+  // NIGHT SKY / FIREFLIES
   const nightCanvas = document.getElementById('nightSky');
   const nctx = nightCanvas.getContext('2d');
   let fireflies = [];
-
-  function resizeNightCanvas(){
-    nightCanvas.width = window.innerWidth;
-    nightCanvas.height = window.innerHeight;
-  }
+  function resizeNightCanvas(){ nightCanvas.width = window.innerWidth; nightCanvas.height = window.innerHeight; }
   resizeNightCanvas();
   window.addEventListener('resize', resizeNightCanvas);
 
   for(let i=0; i<45; i++){
     fireflies.push({
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      size: Math.random() * 2.5 + 1.2,
-      vx: (Math.random() - 0.5) * 0.4,
-      vy: (Math.random() - 0.5) * 0.4,
-      glow: Math.random() * Math.PI,
-      glowSpeed: 0.02 + Math.random() * 0.03
+      x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight,
+      size: Math.random() * 2.5 + 1.2, vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+      glow: Math.random() * Math.PI, glowSpeed: 0.02 + Math.random() * 0.03
     });
   }
-
   function renderNightSky(){
     nctx.clearRect(0, 0, nightCanvas.width, nightCanvas.height);
     if(document.body.classList.contains('midnight-mode')){
       fireflies.forEach(f => {
-        f.x += f.vx;
-        f.y += f.vy;
-        f.glow += f.glowSpeed;
+        f.x += f.vx; f.y += f.vy; f.glow += f.glowSpeed;
         if(f.x < 0) f.x = nightCanvas.width;
         if(f.x > nightCanvas.width) f.x = 0;
         if(f.y < 0) f.y = nightCanvas.height;
         if(f.y > nightCanvas.height) f.y = 0;
-
         const alpha = (Math.sin(f.glow) + 1) * 0.4 + 0.15;
         nctx.save();
         nctx.beginPath();
@@ -1174,7 +1156,7 @@
   }
   renderNightSky();
 
-  // NAME CUSTOMIZATION
+  // NAMES
   const nameInput = document.getElementById('nameInput');
   const myNameInput = document.getElementById('myNameInput');
   function applyNames(){
@@ -1197,7 +1179,7 @@
     document.body.appendChild(h);
   }
 
-  // MOUSE BLOB & CURSOR HEARTS
+  // MOUSE BLOB
   const blob1 = document.getElementById('blob1');
   const blob2 = document.getElementById('blob2');
   let lastMove = 0;
@@ -1217,7 +1199,7 @@
     }
   });
 
-  // 3D TILT EFFECT & DYNAMIC SPECULAR GLARE
+  // 3D TILT EFFECT
   function applyTiltEffects(){
     document.querySelectorAll('.tilt-card').forEach(card => {
       const sheen = card.querySelector('.tilt-sheen');
@@ -1227,9 +1209,8 @@
         const y = e.clientY - rect.top;
         const centerX = rect.width / 2;
         const centerY = rect.height / 2;
-        const rotateX = ((y - centerY) / centerY) * -9;
-        const rotateY = ((x - centerX) / centerX) * 9;
-
+        const rotateX = ((y - centerY) / centerY) * -8;
+        const rotateY = ((x - centerX) / centerX) * 8;
         card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
         if(sheen){
           sheen.style.opacity = '1';
@@ -1244,7 +1225,7 @@
   }
   applyTiltEffects();
 
-  // TYPEWRITER HEADER
+  // TYPEWRITER
   const twEl = document.getElementById('typewriter');
   const twFull = "I'm sorry, ";
   let twIdx = 0;
@@ -1259,15 +1240,15 @@
     }, 55);
   }
 
-  // HEARTBEAT / DAYS IN LOVE COUNTER (CALIBRATED TO REAL DATES)
-  let activeStartDate = '2023-01-21'; // Default: First met on 21 Jan 2023
+  // HEARTBEAT / DAYS IN LOVE COUNTER WITH MILLISECONDS
+  let activeStartDate = '2023-01-21';
   const cntDays = document.getElementById('cntDays');
   const cntHours = document.getElementById('cntHours');
   const cntMinutes = document.getElementById('cntMinutes');
   const cntSeconds = document.getElementById('cntSeconds');
+  const cntMillis = document.getElementById('cntMillis');
   const cntHeartbeats = document.getElementById('cntHeartbeats');
 
-  // Milestone quick-tabs
   document.querySelectorAll('.milestone-pill').forEach(btn => {
     btn.addEventListener('click', () => {
       document.querySelectorAll('.milestone-pill').forEach(b => b.classList.remove('active'));
@@ -1287,18 +1268,19 @@
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
     const minutes = Math.floor((diff / (1000 * 60)) % 60);
     const seconds = Math.floor((diff / 1000) % 60);
+    const millis = Math.floor((diff % 1000) / 10);
 
     cntDays.textContent = days.toLocaleString();
     cntHours.textContent = String(hours).padStart(2, '0');
     cntMinutes.textContent = String(minutes).padStart(2, '0');
     cntSeconds.textContent = String(seconds).padStart(2, '0');
+    cntMillis.textContent = String(millis).padStart(2, '0');
 
-    // Human heart beats approx 72 times per min = 1.2 times/sec
     const totalSeconds = Math.floor(diff / 1000);
     const totalBeats = Math.floor(totalSeconds * 1.2);
     cntHeartbeats.textContent = totalBeats.toLocaleString();
   }
-  setInterval(updateLoveCounter, 1000);
+  setInterval(updateLoveCounter, 33);
   updateLoveCounter();
 
   // BIOMETRIC ANGER SCANNER GAG
@@ -1306,7 +1288,6 @@
   const scannerStatus = document.getElementById('scannerStatus');
   const scannerResult = document.getElementById('scannerResult');
   let scanTimer = null, scanHoldTime = 0;
-
   const funnyDiagnoses = [
     "🚨 DIAGNOSIS: 94% Hangry, 6% actually mad. Immediate chocolates & boba tea required.",
     "🔬 SCAN COMPLETE: Anger levels dropping. Heart rate indicates she secretly misses me.",
@@ -1334,7 +1315,6 @@
       }
     }, 100);
   }
-
   function stopScan(){
     if(scanHoldTime < 1600){
       clearInterval(scanTimer);
@@ -1342,12 +1322,62 @@
       scannerStatus.textContent = "Scan incomplete! Don't let go so fast!";
     }
   }
-
   scannerPad.addEventListener('mousedown', startScan);
   scannerPad.addEventListener('touchstart', (e) => { e.preventDefault(); startScan(); });
   ['mouseup', 'mouseleave', 'touchend'].forEach(ev => scannerPad.addEventListener(ev, stopScan));
 
-  // DRAGGABLE POLAROID SCRAPBOOK
+  // 3D REALISTIC ENVELOPE SLIDE-OUT
+  const envelopeWrapper = document.getElementById('envelopeWrapper');
+  const letterPaper = document.getElementById('letterPaper');
+  envelopeWrapper.addEventListener('click', () => {
+    playTone(620, 'sine', 0.3, 0.1);
+    envelopeWrapper.classList.add('open');
+    setTimeout(() => {
+      letterPaper.classList.add('show');
+      letterPaper.scrollIntoView({ behavior:'smooth', block:'center' });
+    }, 450);
+  });
+
+  // POLAROID PHOTO UPLOAD (PERSISTENT IN LOCALSTORAGE)
+  let activeUploadIdx = 0;
+  const fileInput = document.getElementById('polaroidFileInput');
+
+  function triggerUpload(idx, e){
+    e.stopPropagation();
+    activeUploadIdx = idx;
+    fileInput.click();
+  }
+
+  fileInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = function(evt){
+      const dataUrl = evt.target.result;
+      const photoEl = document.getElementById('photo' + activeUploadIdx);
+      if(photoEl){
+        photoEl.style.backgroundImage = `url(${dataUrl})`;
+        photoEl.querySelectorAll('svg, span').forEach(el => el.style.display = 'none');
+        localStorage.setItem('polaroid_saved_img_' + activeUploadIdx, dataUrl);
+        playCelebrationSfx();
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Restore saved photos on page load
+  for(let i=0; i<4; i++){
+    const savedImg = localStorage.getItem('polaroid_saved_img_' + i);
+    if(savedImg){
+      const photoEl = document.getElementById('photo' + i);
+      if(photoEl){
+        photoEl.style.backgroundImage = `url(${savedImg})`;
+        photoEl.querySelectorAll('svg, span').forEach(el => el.style.display = 'none');
+      }
+    }
+  }
+
+  // DRAGGABLE POLAROIDS
   let highestZ = 10;
   document.querySelectorAll('.polaroid-card').forEach((card, idx) => {
     const baseRot = (idx % 2 === 0 ? -1 : 1) * (2 + Math.random() * 3);
@@ -1363,55 +1393,47 @@
     });
 
     let isDragging = false, startX, startY, origX = 0, origY = 0;
-
     function onPointerDown(e){
       initAudio();
       isDragging = true;
       card.setAttribute('data-dragged', 'false');
       highestZ += 2;
       card.style.zIndex = highestZ;
-
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
       const clientY = e.touches ? e.touches[0].clientY : e.clientY;
       startX = clientX - origX;
       startY = clientY - origY;
     }
-
     function onPointerMove(e){
       if(!isDragging) return;
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
       const clientY = e.touches ? e.touches[0].clientY : e.clientY;
       const newX = clientX - startX;
       const newY = clientY - startY;
-
       if(Math.abs(newX - origX) > 5 || Math.abs(newY - origY) > 5){
         card.setAttribute('data-dragged', 'true');
       }
-
       origX = newX;
       origY = newY;
       card.style.transform = `translate(${origX}px, ${origY}px) rotate(${baseRot}deg) scale(1.05)`;
     }
-
     function onPointerUp(){
       if(isDragging){
         isDragging = false;
         card.style.transform = `translate(${origX}px, ${origY}px) rotate(${baseRot}deg) scale(1)`;
       }
     }
-
     card.addEventListener('mousedown', onPointerDown);
     window.addEventListener('mousemove', onPointerMove);
     window.addEventListener('mouseup', onPointerUp);
-
     card.addEventListener('touchstart', onPointerDown, {passive:true});
     window.addEventListener('touchmove', onPointerMove, {passive:true});
     window.addEventListener('touchend', onPointerUp);
   });
 
-  // APOLOGY COUPONS REDEEM
+  // APOLOGY COUPONS
   document.querySelectorAll('.coupon-redeem-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', () => {
       const card = btn.closest('.coupon-card');
       const stamp = card.querySelector('.coupon-stamp');
       playCelebrationSfx();
@@ -1419,7 +1441,7 @@
     });
   });
 
-  // GATE MINIGAME (IMPROVED PLAYFUL TEASING RESPONSE)
+  // GATE MINIGAME
   const gate = document.getElementById('gate');
   const gateStep1 = document.getElementById('gateStep1');
   const gateStep2 = document.getElementById('gateStep2');
@@ -1432,14 +1454,12 @@
   const gateProgressFill = document.getElementById('gateProgressFill');
   const gateEnterBtn = document.getElementById('gateEnterBtn');
   const gateTargetNum = 8;
-  let gatePopped = 0;
-  let gateSpawnTimer = null;
+  let gatePopped = 0, gateSpawnTimer = null;
 
   function gateSubmitFault(){
     initAudio();
     playTone(480, 'sine', 0.15, 0.08);
     const val = (gateFaultInput.value || '').trim().toLowerCase();
-    
     if(val.includes('you') || val.includes('yours') || val.includes('him')){
       gateEcho.textContent = `"Yours"? Nice try! Biometric scan confirms: 100% my fault, but I'm flattered you tried.`;
     } else if(val.includes('mine') || val.includes('me')){
@@ -1447,7 +1467,6 @@
     } else {
       gateEcho.textContent = `"${val || 'no comment'}"? Cute guess! It was 100% mine.`;
     }
-
     gateStep1.classList.remove('active');
     gateStep2.classList.add('active');
     startGateGame();
@@ -1462,10 +1481,19 @@
     const btn = document.createElement('button');
     btn.className = 'gate-heart-btn';
     btn.innerHTML = '&#10084;';
-    btn.style.left = (Math.random()*(rect.width-32)) + 'px';
-    btn.style.top = (Math.random()*(rect.height-32)) + 'px';
-    btn.addEventListener('click', () => {
+    btn.style.left = (Math.random()*(rect.width-36)) + 'px';
+    btn.style.top = (Math.random()*(rect.height-36)) + 'px';
+    btn.addEventListener('click', (e) => {
       playPopSfx();
+      // Combo floater
+      const floater = document.createElement('div');
+      floater.className = 'combo-floater';
+      floater.textContent = `+1 Pop! 💖`;
+      floater.style.left = btn.style.left;
+      floater.style.top = btn.style.top;
+      gateGame.appendChild(floater);
+      setTimeout(() => floater.remove(), 800);
+
       btn.remove();
       gatePopped++;
       gateCount.textContent = gatePopped + ' / ' + gateTargetNum;
@@ -1484,7 +1512,7 @@
   }
   function startGateGame(){
     spawnGateHeart(); spawnGateHeart(); spawnGateHeart();
-    gateSpawnTimer = setInterval(spawnGateHeart, 650);
+    gateSpawnTimer = setInterval(spawnGateHeart, 600);
   }
   gateEnterBtn.addEventListener('click', () => {
     initAudio();
@@ -1492,7 +1520,6 @@
     gate.classList.add('hidden');
     document.body.classList.remove('gate-active');
     typewrite();
-    // Auto start soft romantic music upon gate unlock
     toggleRomanticMusic();
   });
 
@@ -1517,15 +1544,6 @@
   loadContinue.addEventListener('click', () => {
     playTone(520, 'sine', 0.15, 0.08);
     document.getElementById('letter').scrollIntoView({behavior:'smooth'});
-  });
-
-  // ENVELOPE OPEN
-  const envelope = document.getElementById('envelope');
-  const letterText = document.getElementById('letterText');
-  envelope.addEventListener('click', () => {
-    playTone(580, 'sine', 0.25, 0.08);
-    envelope.classList.add('open');
-    setTimeout(() => letterText.classList.add('show'), 300);
   });
 
   // NICKNAMES
@@ -1558,10 +1576,7 @@
   cards.forEach(c => {
     const card = document.createElement('div');
     card.className = 'flip-card';
-    card.innerHTML = `<div class="flip-inner">
-        <div class="face front">${c.front}</div>
-        <div class="face back">${c.back}</div>
-      </div>`;
+    card.innerHTML = `<div class="flip-inner"><div class="face front">${c.front}</div><div class="face back">${c.back}</div></div>`;
     card.addEventListener('click', () => {
       playFlipSfx();
       card.classList.toggle('flipped');
@@ -1587,40 +1602,82 @@
   });
   applyTiltEffects();
 
-  // CONTRACT AGREEMENT GAG
+  // CONTRACT AGREEMENT & DIGITAL SIGNATURE PAD
   const contract = document.getElementById('contract');
   const agreeCheck = document.getElementById('agreeCheck');
   const agreeBtn = document.getElementById('agreeBtn');
   const scrollNudge = document.getElementById('scrollNudge');
-  const contractDone = document.getElementById('contractDone');
+  const sigBox = document.getElementById('sigBox');
+  const certCard = document.getElementById('certificateCard');
+  const sigPad = document.getElementById('signaturePad');
+  const sctx = sigPad.getContext('2d');
+  let isSigning = false;
+
   contract.addEventListener('scroll', () => {
     if(contract.scrollTop + contract.clientHeight >= contract.scrollHeight - 10){
       agreeCheck.disabled = false;
       scrollNudge.style.opacity = '0';
     }
   });
+
   agreeCheck.addEventListener('change', () => {
     playTone(520, 'sine', 0.1, 0.06);
+    sigBox.style.display = agreeCheck.checked ? 'block' : 'none';
     agreeBtn.classList.toggle('ready', agreeCheck.checked);
   });
+
+  // Signature drawing logic
+  sctx.strokeStyle = '#4A2545';
+  sctx.lineWidth = 3;
+  sctx.lineCap = 'round';
+
+  function getSigPos(e){
+    const rect = sigPad.getBoundingClientRect();
+    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+    return { x: clientX - rect.left, y: clientY - rect.top };
+  }
+  function startSig(e){
+    isSigning = true;
+    const pos = getSigPos(e);
+    sctx.beginPath();
+    sctx.moveTo(pos.x, pos.y);
+  }
+  function drawSig(e){
+    if(!isSigning) return;
+    const pos = getSigPos(e);
+    sctx.lineTo(pos.x, pos.y);
+    sctx.stroke();
+  }
+  function endSig(){ isSigning = false; }
+
+  sigPad.addEventListener('mousedown', startSig);
+  sigPad.addEventListener('mousemove', drawSig);
+  window.addEventListener('mouseup', endSig);
+  sigPad.addEventListener('touchstart', (e) => { e.preventDefault(); startSig(e); });
+  sigPad.addEventListener('touchmove', (e) => { e.preventDefault(); drawSig(e); });
+  window.addEventListener('touchend', endSig);
+
+  document.getElementById('sigClearBtn').addEventListener('click', () => {
+    sctx.clearRect(0, 0, sigPad.width, sigPad.height);
+  });
+
   agreeBtn.addEventListener('click', () => {
     if(!agreeCheck.checked) return;
     playCelebrationSfx();
-    contractDone.classList.add('show');
+    certCard.classList.add('show');
+    agreeBtn.style.display = 'none';
+    sigBox.style.display = 'none';
   });
 
-  // IMPROVED WHOSE FAULT DODGE BUTTON (PLAYFUL TEASING)
+  // WHOSE FAULT DODGE BUTTON WITH COMIC BUBBLE
   const faultYours = document.getElementById('faultYours');
+  const faultBubble = document.getElementById('faultBubble');
   const faultReveal = document.getElementById('faultReveal');
   let faultDodges = 0;
-  const faultPhrases = [
-    "Actually, yours",
-    "Catch me if you can 🏃‍♀️",
-    "Too slow, Gudiya!",
-    "404: Fault not found in me",
-    "Still chasing this? 😂",
-    "Okay you get a cookie 🍪 (Still my fault though)"
-  ];
+  const faultPhrases = ["Actually, yours", "Catch me! 🏃‍♀️", "Too slow, Gudiya!", "404: Not my fault", "Still chasing? 😂", "You win a cookie 🍪"];
+  const faultTaunts = ["Missed me!", "Try again!", "Haha too slow!", "Ain't happening!", "Still trying?", "Best effort!"];
+
   function dodgeFault(){
     playDodgeSfx();
     const boxRect = faultYours.parentElement.getBoundingClientRect();
@@ -1629,11 +1686,18 @@
     const maxTop = boxRect.height - btnRect.height - 10;
     const newLeft = Math.max(10, Math.random() * maxLeft);
     const newTop = Math.max(30, 30 + Math.random() * (maxTop - 30));
+    
     faultYours.style.left = newLeft + 'px';
     faultYours.style.top = newTop + 'px';
     faultDodges = Math.min(faultDodges + 1, faultPhrases.length - 1);
     faultYours.textContent = faultPhrases[faultDodges];
-    faultYours.style.fontSize = Math.max(0.72, 1 - faultDodges*0.05) + 'rem';
+
+    // Show comic bubble
+    faultBubble.textContent = faultTaunts[faultDodges % faultTaunts.length];
+    faultBubble.style.left = (newLeft + 10) + 'px';
+    faultBubble.style.top = (newTop - 10) + 'px';
+    faultBubble.classList.add('show');
+    setTimeout(() => faultBubble.classList.remove('show'), 700);
   }
   faultYours.addEventListener('mouseenter', dodgeFault);
   faultYours.addEventListener('click', (e) => { e.preventDefault(); dodgeFault(); });
@@ -1643,12 +1707,22 @@
     faultReveal.classList.add('show');
   });
 
-  // FORGIVENESS METER
+  // FORGIVENESS METER WITH LIVE MOOD EMOJI PROGRESSION
   const holdBtn = document.getElementById('holdBtn');
   const meterFill = document.getElementById('meterFill');
   const meterLabel = document.getElementById('meterLabel');
+  const meterMoodBadge = document.getElementById('meterMoodBadge');
   const meterDone = document.getElementById('meterDone');
   let meterVal = 0, holdTimer = null;
+
+  function updateMoodText(val){
+    if(val < 20) meterMoodBadge.textContent = "😤 Still annoyed...";
+    else if(val < 45) meterMoodBadge.textContent = "🙄 Thinking about it...";
+    else if(val < 75) meterMoodBadge.textContent = "🥺 Okay, getting softer...";
+    else if(val < 99) meterMoodBadge.textContent = "🥰 Almost there...";
+    else meterMoodBadge.textContent = "💖 Fully Forgiven! (Snacks required)";
+  }
+
   function startHold(){
     if(meterVal >= 100) return;
     initAudio();
@@ -1656,6 +1730,7 @@
       meterVal = Math.min(100, meterVal + 2);
       meterFill.style.width = meterVal + '%';
       meterLabel.textContent = meterVal + '% forgiven';
+      updateMoodText(meterVal);
       if(meterVal % 10 === 0) playTone(300 + meterVal * 4, 'sine', 0.06, 0.04);
       if(meterVal >= 100){
         clearInterval(holdTimer);
@@ -1708,25 +1783,20 @@
   }
   petalLoop();
 
-  // RUNAWAY NO BUTTON (CONVERTS TO YES AFTER PRANK DODGES)
+  // RUNAWAY NO BUTTON (CONVERTS TO YES + COMIC BUBBLE)
   const noBtn = document.getElementById('noBtn');
   const yesBtn = document.getElementById('yesBtn');
   const askBox = document.querySelector('.ask-box');
+  const noBubble = document.getElementById('noBubble');
   const yesReveal = document.getElementById('yesReveal');
   let dodges = 0;
-  const noPhrases = [
-    "No",
-    "Wait, really?",
-    "Are you sure, Bujji?",
-    "Think again... 🤔",
-    "Don't be stubborn!",
-    "Yes, but with extra snacks 🍟"
-  ];
+  const noPhrases = ["No", "Wait, really?", "Are you sure, Bujji?", "Think again... 🤔", "Don't be stubborn!", "Yes, but with extra snacks 🍟"];
+  const noTaunts = ["Whoosh!", "Nope!", "Can't click this!", "Try again! 😜", "Almost got it!"];
+
   function dodge(){
     playDodgeSfx();
     dodges++;
     if(dodges >= noPhrases.length - 1){
-      // Transform No button into second Yes button!
       noBtn.textContent = noPhrases[noPhrases.length - 1];
       noBtn.style.background = 'var(--gold)';
       noBtn.style.color = 'var(--plum-deep)';
@@ -1734,7 +1804,6 @@
       noBtn.addEventListener('click', triggerYes);
       return;
     }
-
     const boxRect = askBox.getBoundingClientRect();
     const btnRect = noBtn.getBoundingClientRect();
     const maxLeft = boxRect.width - btnRect.width - 10;
@@ -1744,19 +1813,19 @@
     noBtn.style.left = newLeft + 'px';
     noBtn.style.top = newTop + 'px';
     noBtn.textContent = noPhrases[dodges];
+
+    noBubble.textContent = noTaunts[dodges % noTaunts.length];
+    noBubble.style.left = (newLeft + 10) + 'px';
+    noBubble.style.top = (newTop - 12) + 'px';
+    noBubble.classList.add('show');
+    setTimeout(() => noBubble.classList.remove('show'), 700);
   }
   noBtn.addEventListener('mouseenter', dodge);
   noBtn.addEventListener('click', (e) => {
-    if(dodges < noPhrases.length - 1){
-      e.preventDefault();
-      dodge();
-    }
+    if(dodges < noPhrases.length - 1){ e.preventDefault(); dodge(); }
   });
   noBtn.addEventListener('touchstart', (e) => {
-    if(dodges < noPhrases.length - 1){
-      e.preventDefault();
-      dodge();
-    }
+    if(dodges < noPhrases.length - 1){ e.preventDefault(); dodge(); }
   });
 
   // CONFETTI BURST
